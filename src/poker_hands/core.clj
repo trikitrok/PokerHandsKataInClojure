@@ -14,8 +14,11 @@
 
 (def ^:private create-cards (partial map card))
 
-(defn highest-card [hand]
+(defn- highest-card [hand]
   (apply max-key :value hand))
+
+(defn- flush? [hand]
+  (apply = (map :suit hand)))
 
 (defn hand [hand-description]
   (-> hand-description
@@ -23,5 +26,7 @@
       create-cards))
 
 (defn score [hand]
-  (str "high card: "
-       (:face (highest-card hand))))
+  (if (flush? hand)
+    "flush"
+    (str "high card: "
+       (:face (highest-card hand)))))
