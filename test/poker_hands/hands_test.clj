@@ -1,4 +1,4 @@
-(ns poker-hands.core-hands-test
+(ns poker-hands.hands-test
   (:use midje.sweet)
   (:use [poker-hands.hands]))
 
