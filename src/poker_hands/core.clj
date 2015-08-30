@@ -192,8 +192,12 @@
     (four-kind? hand) (a-four-kind hand)
     :else (a-high-card hand)))
 
-(defn hand [hand-description]
+(defn- cards [hand-description]
   (-> hand-description
       split-in-card-descriptions
-      create-cards
+      create-cards))
+
+(defn hand [hand-description]
+  (-> hand-description
+      cards
       categorize))
