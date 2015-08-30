@@ -4,6 +4,10 @@
   (let [face-values [\2 \3 \4 \5 \6 \7 \8 \9 \J \K \Q \A]]
     (.indexOf face-values (first card-description))))
 
+(defn- by-greater-value [card-description1 card-description2]
+  (> (compute-value card-description1)
+     (compute-value card-description2)))
+
 (defn- split-in-card-descriptions [hand-description]
   (clojure.string/split hand-description #" "))
 
@@ -30,22 +34,37 @@
 
 (def ^:private pluck-face (partial map :face))
 
-(defn- face-pairs [hand]
-  (filter #(= 2 (second %)) (frequencies (pluck-face hand))))
+(defn- make-group-selection-pred [compare-fn group-size]
+  (comp (partial compare-fn group-size) second))
 
-(defn- face-no-pairs [hand]
-  (filter #(= 1 (second %)) (frequencies (pluck-face hand))))
+(def ^:private pairs-pred
+  (make-group-selection-pred = 2))
+
+(def ^:private no-pairs-pred
+  (make-group-selection-pred not= 2))
+
+(defn- faces-groups [group-selection-pred hand]
+  (->> hand
+       pluck-face
+       frequencies
+       (filter group-selection-pred)))
+
+(defn- group-cards [group-selection-pred hand]
+  (sort by-greater-value
+        (map first
+             (faces-groups group-selection-pred hand))))
+
+(def ^:private face-pairs
+  (partial faces-groups pairs-pred))
 
 (defn- pair? [hand]
   (= 1 (count (face-pairs hand))))
 
-(defn- no-pair-cards [hand]
-  (sort #(> (compute-value %1) (compute-value %2))
-        (map first (face-no-pairs hand))))
+(def ^:private no-pair-cards
+  (partial group-cards no-pairs-pred))
 
-(defn- pair-cards [hand]
-  (sort #(> (compute-value %1) (compute-value %2))
-        (map first (face-pairs hand))))
+(def ^:private pair-cards
+  (partial group-cards pairs-pred))
 
 (defn- a-pair [hand]
   {:hand-type     :pair
@@ -60,22 +79,22 @@
    :pair-cards    (pair-cards hand)
    :no-pair-cards (no-pair-cards hand)})
 
-(defn- face-triplets [hand]
-  (filter #(= 3 (second %)) (frequencies (pluck-face hand))))
+(def ^:private triplets-pred
+  (make-group-selection-pred = 3))
 
-(defn- no-face-triplets [hand]
-  (filter #(> 3 (second %)) (frequencies (pluck-face hand))))
+(def ^:private no-triplets-pred
+  (make-group-selection-pred not= 3))
+
+(def face-triplets (partial faces-groups triplets-pred))
 
 (defn- triplet? [hand]
   (= 1 (count (face-triplets hand))))
 
-(defn- triplet-cards [hand]
-  (sort #(> (compute-value %1) (compute-value %2))
-        (map first (face-triplets hand))))
+(def ^:private no-triplet-cards
+  (partial group-cards no-triplets-pred))
 
-(defn- no-triplet-cards [hand]
-  (sort #(> (compute-value %1) (compute-value %2))
-        (map first (no-face-triplets hand))))
+(def ^:private triplet-cards
+  (partial group-cards triplets-pred))
 
 (defn- a-triplet [hand]
   {:hand-type :triplet
