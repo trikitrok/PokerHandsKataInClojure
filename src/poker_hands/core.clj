@@ -1,7 +1,7 @@
 (ns poker-hands.core)
 
 (defn- compute-value [card-description]
-  (let [face-values [\1 \2 \3 \4 \5 \6 \7 \8 \9 \J \K \Q]]
+  (let [face-values [\2 \3 \4 \5 \6 \7 \8 \9 \J \K \Q \A]]
     (.indexOf face-values (first card-description))))
 
 (defn- split-in-card-descriptions [hand-description]
@@ -17,9 +17,13 @@
 (defn- highest-card [hand]
   (apply max-key :value hand))
 
-(defn- high-card [hand]
-  {:hand :high-card
+(defn- a-high-card [hand]
+  {:hand-type    :high-card
    :highest-card (:face (highest-card hand))})
+
+(defn- a-flush [hand]
+  { :hand-type    :flush
+  :highest-card (:face (highest-card hand))})
 
 (defn- flush-scoring []
   "flush")
@@ -49,7 +53,9 @@
          " and " (pair-face (second pairs)))))
 
 (defn- categorize [hand]
-  (high-card hand))
+  (cond
+    (flush? hand) (a-flush hand)
+    :else (a-high-card hand)))
 
 (defn hand [hand-description]
   (-> hand-description

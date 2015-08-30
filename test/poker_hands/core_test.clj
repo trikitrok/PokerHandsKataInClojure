@@ -7,12 +7,12 @@
 
   (fact
     "can be a High card hand"
-    (hand-type "2H 3D 5S 9C 4D") => {:hand :high-card :highest-card "9"}
-    (hand-type "2H 8D 5S 9C KD") => {:hand :high-card :highest-card "K"})
+    (hand-type "2H 3D 5S 9C 4D") => {:hand-type :high-card :highest-card "9"}
+    (hand-type "2H 8D 5S 9C KD") => {:hand-type :high-card :highest-card "K"})
 
   (fact
-    "scores a Flush hand"
-    (score (hand "2S 8S AS QS 3S")) => "flush")
+    "can be a Flush hand"
+    (hand-type "2S 8S AS QS 3S") => {:hand-type :flush :highest-card "A"})
 
   (fact
     "scores a Pair hand"
