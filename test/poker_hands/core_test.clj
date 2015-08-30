@@ -39,4 +39,8 @@
 
   (fact
     "can be a Full House"
-    (hand "5S 2S 5D 2D 5C") => {:hand-type :full-house :triplet-card ["5"] :pair-card ["2"]}))
+    (hand "5S 2S 5D 2D 5C") => {:hand-type :full-house :triplet-card ["5"] :pair-card ["2"]})
+
+  (fact
+    "can be a Four of a Kind rank"
+    (hand "5S 5D 5C QS 5H") => {:hand-type :four-kind :four-kind-card ["5"] :no-four-card ["Q"]}))

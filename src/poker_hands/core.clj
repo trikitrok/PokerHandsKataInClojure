@@ -124,23 +124,21 @@
    :no-triplet-cards (no-triplet-cards hand)})
 
 (defn- consecutives? [sorted-values]
-  (or (= sorted-values [0 1 2 3 12])
-      (every? #(= 1 %)
-              (map #(- (second %) (first %))
-                   (partition 2 1 sorted-values)))))
+  (every? #(= 1 %)
+          (map #(- (second %) (first %))
+               (partition 2 1 sorted-values))))
 
 (defn- sorted-values [hand]
   (->> hand
        pluck-value
        sort))
 
-(defn- straight? [hand]
-  (->> hand
-       sorted-values
-       consecutives?))
-
 (defn- wheel? [hand]
   (= (sorted-values hand) [0 1 2 3 12]))
+
+(defn- straight? [hand]
+  (or (wheel? hand)
+      (consecutives? (sorted-values hand))))
 
 (defn- a-straight [hand]
   {:hand-type :straight
@@ -159,6 +157,29 @@
    :triplet-card (triplet-cards hand)
    :pair-card    (pair-cards hand)})
 
+(def ^:private four-kind-pred
+  (make-group-selection-pred = 4))
+
+(def ^:private no-four-kind-pred
+  (make-group-selection-pred not= 4))
+
+(def ^:private face-four-kinds
+  (partial faces-groups four-kind-pred))
+
+(defn- four-kind? [hand]
+  (= 1 (count (face-four-kinds hand))))
+
+(def ^:private no-four-kind-cards
+  (partial group-cards no-four-kind-pred))
+
+(def ^:private four-kind-cards
+  (partial group-cards four-kind-pred))
+
+(defn- a-four-kind [hand]
+  {:hand-type      :four-kind
+   :four-kind-card (four-kind-cards hand)
+   :no-four-card   (no-four-kind-cards hand)})
+
 (defn- categorize [hand]
   (cond
     (and (flush? hand) (not (straight? hand))) (a-flush hand)
@@ -168,6 +189,7 @@
     (and (straight? hand) (not (flush? hand))) (a-straight hand)
     (and (straight? hand) (flush? hand)) (a-straight-flush hand)
     (and (triplet? hand) (pair? hand)) (a-full-house hand)
+    (four-kind? hand) (a-four-kind hand)
     :else (a-high-card hand)))
 
 (defn hand [hand-description]
