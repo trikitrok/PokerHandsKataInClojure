@@ -3,12 +3,12 @@
   (:use [poker-hands.core]))
 
 (facts
-  "A poker hand scorer"
+  "A poker hand"
 
   (fact
-    "scores a High card hand"
-    (score (hand "2H 3D 5S 9C 4D")) => "high card: 9"
-    (score (hand "2H 8D 5S 9C KD")) => "high card: K")
+    "can be a High card hand"
+    (hand-type "2H 3D 5S 9C 4D") => {:hand :high-card :highest-card "9"}
+    (hand-type "2H 8D 5S 9C KD") => {:hand :high-card :highest-card "K"})
 
   (fact
     "scores a Flush hand"

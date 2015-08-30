@@ -17,9 +17,9 @@
 (defn- highest-card [hand]
   (apply max-key :value hand))
 
-(defn- high-card-scoring [hand]
-  (str "high card: "
-       (:face (highest-card hand))))
+(defn- high-card [hand]
+  {:hand :high-card
+   :highest-card (:face (highest-card hand))})
 
 (defn- flush-scoring []
   "flush")
@@ -48,14 +48,23 @@
     (str "two pairs of " (pair-face (first pairs))
          " and " (pair-face (second pairs)))))
 
+(defn- categorize [hand]
+  (high-card hand))
+
 (defn hand [hand-description]
   (-> hand-description
       split-in-card-descriptions
       create-cards))
+
+(defn hand-type [hand-description]
+  (-> hand-description
+      split-in-card-descriptions
+      create-cards
+      categorize))
 
 (defn score [hand]
   (cond
     (flush? hand) (flush-scoring)
     (pair? hand) (pair-scoring hand)
     (two-pairs? hand) (two-pair-scoring hand)
-    :else (high-card-scoring hand)))
+    :else (categorize hand)))
