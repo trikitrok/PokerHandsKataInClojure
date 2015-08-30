@@ -26,11 +26,11 @@
   (second (highest-cards hand)))
 
 (defn- a-high-card [hand]
-  {:hand-type    :high-card
+  {:type         :high-card
    :highest-card (:face (highest-card hand))})
 
 (defn- a-flush [hand]
-  {:hand-type    :flush
+  {:type         :flush
    :highest-card (:face (highest-card hand))})
 
 (defn- flush? [hand]
@@ -60,7 +60,7 @@
   (partial subset pairs-pred))
 
 (defn- a-pair [hand]
-  {:hand-type     :pair
+  {:type          :pair
    :pair-card     (pair-cards hand)
    :no-pair-cards (no-pair-cards hand)})
 
@@ -68,7 +68,7 @@
   (= 2 (count (face-pairs hand))))
 
 (defn- a-two-pairs [hand]
-  {:hand-type     :two-pairs
+  {:type          :two-pairs
    :pair-cards    (pair-cards hand)
    :no-pair-cards (no-pair-cards hand)})
 
@@ -91,7 +91,7 @@
   (partial subset triplets-pred))
 
 (defn- a-triplet [hand]
-  {:hand-type        :triplet
+  {:type             :triplet
    :triplet-card     (triplet-cards hand)
    :no-triplet-cards (no-triplet-cards hand)})
 
@@ -113,19 +113,19 @@
       (consecutives? (sorted-values hand))))
 
 (defn- a-straight [hand]
-  {:hand-type :straight
+  {:type :straight
    :highest-card
-              (:face (if (wheel? hand)
-                       (second-highest-card hand)
-                       (highest-card hand)))})
+         (:face (if (wheel? hand)
+                  (second-highest-card hand)
+                  (highest-card hand)))})
 
 (defn- a-straight-flush [hand]
   (assoc
     (a-straight hand)
-    :hand-type :straight-flush))
+    :type :straight-flush))
 
 (defn- a-full-house [hand]
-  {:hand-type    :full-house
+  {:type         :full-house
    :triplet-card (triplet-cards hand)
    :pair-card    (pair-cards hand)})
 
@@ -148,7 +148,7 @@
   (partial subset four-kind-pred))
 
 (defn- a-four-kind [hand]
-  {:hand-type      :four-kind
+  {:type           :four-kind
    :four-kind-card (four-kind-cards hand)
    :no-four-card   (no-four-kind-cards hand)})
 
