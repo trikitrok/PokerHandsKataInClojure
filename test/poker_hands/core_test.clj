@@ -24,4 +24,12 @@
 
   (fact
     "can be a Three of a Kind hand"
-    (hand "5S 5D 5C QS 2D") => {:hand-type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]}))
+    (hand "5S 5D 5C QS 2D") => {:hand-type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]})
+
+  (fact
+    "can be a Straight hand"
+    (hand "QS JD 10H 9S 8C") => {:hand-type :straight :highest-card "Q"}
+    (hand "AS KC QH JH 10D") => {:hand-type :straight :highest-card "A"}
+    (let [wheeel-description "5C 4H 3D 2C AS"]
+      (hand wheeel-description) => {:hand-type :straight :highest-card "5"}))
+  )
