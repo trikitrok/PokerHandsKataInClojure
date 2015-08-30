@@ -8,9 +8,9 @@
   (clojure.string/split hand-description #" "))
 
 (defn- card [card-description]
-  {:face (str (first card-description))
-  :value (compute-value card-description)
-  :suit (str (second card-description))})
+  {:face  (str (first card-description))
+   :value (compute-value card-description)
+   :suit  (str (second card-description))})
 
 (def ^:private create-cards (partial map card))
 
@@ -27,13 +27,19 @@
 (defn- flush? [hand]
   (apply = (map :suit hand)))
 
+(def ^:private pluck-face (partial map :face))
+
+(defn- face-pairs [hand]
+  (filter #(= 2 (second %)) (frequencies (pluck-face hand))))
+
 (defn- pair? [hand]
-  (= 1 (count (filter #(> % 1) (vals (frequencies (map :face hand)))))))
+  (= 1 (count (face-pairs hand))))
+
+(defn- pair-face [hand]
+  (first (first (face-pairs hand))))
 
 (defn- pair-scoring [hand]
-  (let [[pair-face _] (first (filter #(= 2 (second %)) (frequencies (map :face hand))))]
-    (str "pair of " pair-face))
-  )
+  (str "pair of " (pair-face hand)))
 
 (defn hand [hand-description]
   (-> hand-description
