@@ -1,6 +1,21 @@
 (ns poker-hands.hands
   (:require [poker-hands.cards :as cards]))
 
+(def ^:private sort-by-greater-face-value
+  (partial sort cards/by-greater-face-value))
+
+(def ^:private pluck-faces (partial map :face))
+
+(defn- faces-subset [group-selection-pred hand]
+  (->> hand
+       pluck-faces
+       frequencies
+       (filter group-selection-pred)))
+
+(defn- subset [group-selection-pred hand]
+    (sort-by-greater-face-value
+      (map first (faces-subset group-selection-pred hand))))
+
 (defn- highest-cards [hand]
   (sort #(> (:value %1) (:value %2)) hand))
 
@@ -21,7 +36,7 @@
 (defn- flush? [hand]
   (apply = (map :suit hand)))
 
-(def ^:private pluck-value (partial map :value))
+(def ^:private pluck-values (partial map :value))
 
 (defn- make-group-selection-pred [compare-fn group-size]
   (comp (partial compare-fn group-size) second))
@@ -33,16 +48,16 @@
   (make-group-selection-pred not= 2))
 
 (def ^:private face-pairs
-  (partial cards/faces-subset pairs-pred))
+  (partial faces-subset pairs-pred))
 
 (defn- pair? [hand]
   (= 1 (count (face-pairs hand))))
 
 (def ^:private no-pair-cards
-  (partial cards/subset no-pairs-pred))
+  (partial subset no-pairs-pred))
 
 (def ^:private pair-cards
-  (partial cards/subset pairs-pred))
+  (partial subset pairs-pred))
 
 (defn- a-pair [hand]
   {:hand-type     :pair
@@ -64,16 +79,16 @@
   (make-group-selection-pred not= 3))
 
 (def ^:private face-triplets
-  (partial cards/faces-subset triplets-pred))
+  (partial faces-subset triplets-pred))
 
 (defn- triplet? [hand]
   (= 1 (count (face-triplets hand))))
 
 (def ^:private no-triplet-cards
-  (partial cards/subset no-triplets-pred))
+  (partial subset no-triplets-pred))
 
 (def ^:private triplet-cards
-  (partial cards/subset triplets-pred))
+  (partial subset triplets-pred))
 
 (defn- a-triplet [hand]
   {:hand-type        :triplet
@@ -87,7 +102,7 @@
 
 (defn- sorted-values [hand]
   (->> hand
-       pluck-value
+       pluck-values
        sort))
 
 (defn- wheel? [hand]
@@ -121,16 +136,16 @@
   (make-group-selection-pred not= 4))
 
 (def ^:private face-four-kinds
-  (partial cards/faces-subset four-kind-pred))
+  (partial faces-subset four-kind-pred))
 
 (defn- four-kind? [hand]
   (= 1 (count (face-four-kinds hand))))
 
 (def ^:private no-four-kind-cards
-  (partial cards/subset no-four-kind-pred))
+  (partial subset no-four-kind-pred))
 
 (def ^:private four-kind-cards
-  (partial cards/subset four-kind-pred))
+  (partial subset four-kind-pred))
 
 (defn- a-four-kind [hand]
   {:hand-type      :four-kind
