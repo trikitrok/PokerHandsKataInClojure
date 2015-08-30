@@ -10,9 +10,6 @@
   (let [face-values ["2" "3" "4" "5" "6" "7" "8" "9" "10" "J" "Q" "K" "A"]]
     (.indexOf face-values (face face-description))))
 
-(defn by-greater-face-value [face-description1 face-description2]
-  (> (compute-value face-description1) (compute-value face-description2)))
-
 (defn- suit [card-description]
   (if (= 2 (count card-description))
     (str (second card-description))
@@ -22,6 +19,10 @@
   {:face  (face card-description)
    :value (compute-value card-description)
    :suit  (suit card-description)})
+
+(defn by-greater-face-value [face-description1 face-description2]
+  (> (compute-value face-description1)
+     (compute-value face-description2)))
 
 (defn split-in-card-descriptions [hand-description]
   (clojure.string/split hand-description #" "))
