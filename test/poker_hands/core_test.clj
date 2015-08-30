@@ -32,4 +32,11 @@
     (hand "AS KC QH JH 10D") => {:hand-type :straight :highest-card "A"}
     (let [wheeel-description "5C 4H 3D 2C AS"]
       (hand wheeel-description) => {:hand-type :straight :highest-card "5"}))
-  )
+
+  (fact
+    "can be a Straight Flush"
+    (hand "QS JS 10S 9S 8S") => {:hand-type :straight-flush :highest-card "Q"})
+
+  (fact
+    "can be a Full House"
+    (hand "5S 2S 5D 2D 5C") => {:hand-type :full-house :triplet-card ["5"] :pair-card ["2"]}))

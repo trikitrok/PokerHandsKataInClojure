@@ -149,13 +149,25 @@
                        (second-highest-card hand)
                        (highest-card hand)))})
 
+(defn- a-straight-flush [hand]
+  (assoc
+    (a-straight hand)
+    :hand-type :straight-flush))
+
+(defn- a-full-house [hand]
+  {:hand-type    :full-house
+   :triplet-card (triplet-cards hand)
+   :pair-card    (pair-cards hand)})
+
 (defn- categorize [hand]
   (cond
-    (flush? hand) (a-flush hand)
-    (pair? hand) (a-pair hand)
+    (and (flush? hand) (not (straight? hand))) (a-flush hand)
+    (and (pair? hand) (not (triplet? hand))) (a-pair hand)
     (two-pairs? hand) (a-two-pairs hand)
-    (triplet? hand) (a-triplet hand)
-    (straight? hand) (a-straight hand)
+    (and (triplet? hand) (not (pair? hand))) (a-triplet hand)
+    (and (straight? hand) (not (flush? hand))) (a-straight hand)
+    (and (straight? hand) (flush? hand)) (a-straight-flush hand)
+    (and (triplet? hand) (pair? hand)) (a-full-house hand)
     :else (a-high-card hand)))
 
 (defn hand [hand-description]
