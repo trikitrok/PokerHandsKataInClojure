@@ -17,6 +17,13 @@
 (defn- highest-card [hand]
   (apply max-key :value hand))
 
+(defn- high-card-scoring [hand]
+  (str "high card: "
+       (:face (highest-card hand))))
+
+(defn- flush-scoring []
+  "flush")
+
 (defn- flush? [hand]
   (apply = (map :suit hand)))
 
@@ -27,6 +34,5 @@
 
 (defn score [hand]
   (if (flush? hand)
-    "flush"
-    (str "high card: "
-       (:face (highest-card hand)))))
+    (flush-scoring)
+    (high-card-scoring hand)))
