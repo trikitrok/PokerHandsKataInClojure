@@ -13,8 +13,8 @@
        (filter group-selection-pred)))
 
 (defn- subset [group-selection-pred hand]
-    (sort-by-greater-face-value
-      (map first (faces-subset group-selection-pred hand))))
+  (sort-by-greater-face-value
+    (map first (faces-subset group-selection-pred hand))))
 
 (defn- highest-cards [hand]
   (sort #(> (:value %1) (:value %2)) hand))
@@ -159,14 +159,28 @@
 
 (defn- classify [hand]
   (cond
-    (and (flush? hand) (not (straight? hand))) (a-flush hand)
-    (and (pair? hand) (not (triplet? hand))) (a-pair hand)
+    (and (flush? hand)
+         (not (straight? hand))) (a-flush hand)
+
+    (and (pair? hand)
+         (not (triplet? hand))) (a-pair hand)
+
     (two-pairs? hand) (a-two-pairs hand)
-    (and (triplet? hand) (not (pair? hand))) (a-triplet hand)
-    (and (straight? hand) (not (flush? hand))) (a-straight hand)
-    (and (straight? hand) (flush? hand)) (a-straight-flush hand)
-    (and (triplet? hand) (pair? hand)) (a-full-house hand)
+
+    (and (triplet? hand)
+         (not (pair? hand))) (a-triplet hand)
+
+    (and (straight? hand)
+         (not (flush? hand))) (a-straight hand)
+
+    (and (straight? hand)
+         (flush? hand)) (a-straight-flush hand)
+
+    (and (triplet? hand)
+         (pair? hand)) (a-full-house hand)
+
     (four-kind? hand) (a-four-kind hand)
+
     :else (a-high-card hand)))
 
 (defn hand [hand-description]
