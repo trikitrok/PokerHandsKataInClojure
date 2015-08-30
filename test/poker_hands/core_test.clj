@@ -7,16 +7,17 @@
 
   (fact
     "scores a High card hand"
-
     (score (hand "2H 3D 5S 9C 4D")) => "high card: 9"
     (score (hand "2H 8D 5S 9C KD")) => "high card: K")
 
   (fact
     "scores a Flush hand"
-
     (score (hand "2S 8S AS QS 3S")) => "flush")
 
   (fact
-    "scores a Flush hand"
+    "scores a Pair hand"
+    (score (hand "2S 8D 5C QS 2D")) => "pair of 2")
 
-    (score (hand "2S 8D 5C QS 2D")) => "pair of 2"))
+  (fact
+    "scores a Two Pair hand"
+    (score (hand "2S 5D 5C QS 2D")) => "two pairs of 2 and 5"))

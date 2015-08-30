@@ -35,11 +35,18 @@
 (defn- pair? [hand]
   (= 1 (count (face-pairs hand))))
 
-(defn- pair-face [hand]
-  (first (first (face-pairs hand))))
+(def pair-face first)
 
 (defn- pair-scoring [hand]
-  (str "pair of " (pair-face hand)))
+  (str "pair of " (pair-face (first (face-pairs hand)))))
+
+(defn- two-pairs? [hand]
+  (= 2 (count (face-pairs hand))))
+
+(defn- two-pair-scoring [hand]
+  (let [pairs (face-pairs hand)]
+    (str "two pairs of " (pair-face (first pairs))
+         " and " (pair-face (second pairs)))))
 
 (defn hand [hand-description]
   (-> hand-description
@@ -50,4 +57,5 @@
   (cond
     (flush? hand) (flush-scoring)
     (pair? hand) (pair-scoring hand)
+    (two-pairs? hand) (two-pair-scoring hand)
     :else (high-card-scoring hand)))
