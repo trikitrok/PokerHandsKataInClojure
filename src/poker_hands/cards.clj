@@ -14,9 +14,6 @@
   (> (compute-value card-description1)
      (compute-value card-description2)))
 
-(defn- split-in-card-descriptions [hand-description]
-  (clojure.string/split hand-description #" "))
-
 (defn- suit [card-description]
   (if (= 2 (count card-description))
     (str (second card-description))
@@ -26,8 +23,6 @@
   {:face  (face card-description)
    :value (compute-value card-description)
    :suit  (suit card-description)})
-
-(def ^:private create-cards (partial map card))
 
 (def ^:private sort-by-greater-value
   (partial sort by-greater-described-value))
@@ -44,7 +39,7 @@
   (sort-by-greater-value
     (map first (faces-subset group-selection-pred hand))))
 
-(defn create [hand-description]
-  (-> hand-description
-      split-in-card-descriptions
-      create-cards))
+(defn split-in-card-descriptions [hand-description]
+  (clojure.string/split hand-description #" "))
+
+(def create-cards (partial map card))
