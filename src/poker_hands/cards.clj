@@ -1,17 +1,17 @@
 (ns poker-hands.cards)
 
-(defn- face [card-description]
-  (if (= 2 (count card-description))
-    (str (first card-description))
-    (str (first card-description)
-         (second card-description))))
+(defn- face [face-description]
+  (if (= 2 (count face-description))
+    (str (first face-description))
+    (str (first face-description)
+         (second face-description))))
 
-(defn- compute-value [card-description]
+(defn- compute-value [face-description]
   (let [face-values ["2" "3" "4" "5" "6" "7" "8" "9" "10" "J" "Q" "K" "A"]]
-    (.indexOf face-values (face card-description))))
+    (.indexOf face-values (face face-description))))
 
-(defn by-greater-face-value [face1 face2]
-  (> (compute-value face1) (compute-value face2)))
+(defn by-greater-face-value [face-description1 face-description2]
+  (> (compute-value face-description1) (compute-value face-description2)))
 
 (defn- suit [card-description]
   (if (= 2 (count card-description))
