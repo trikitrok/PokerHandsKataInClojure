@@ -1,0 +1,5 @@
+(clojure.string/split "2H 3D 5S 9C KD" #" ")
+(map #(hash-map :face (str (first %)) :suit (str (second %))) (clojure.string/split "2H 3D 5S 9C KD" #" "))
+(key (apply max-key val {:a 3 :b 7 :c 9}))
+(apply max-key val {:a 3 :b 7 :c 9})
+(val (apply max-key val {:a 3 :b 7 :c 9}))
