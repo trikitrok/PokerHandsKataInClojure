@@ -31,3 +31,8 @@
 (.equals "a" "b")
 (.equals "a" "a")
 (.equals "a" "a" "c")
+(frecuencies "2S 8D 5C QS 2D")
+(frecuencies ["2S 8D 5C QS 2D"])
+(frequencies ["2S 8D 5C QS 2D"])
+(frequencies ["2S" "8D" "5C" "QS" "2D"])
+(frequencies (map :face "2S 8D 5C QS 2D"))

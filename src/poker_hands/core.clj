@@ -27,12 +27,21 @@
 (defn- flush? [hand]
   (apply = (map :suit hand)))
 
+(defn- pair? [hand]
+  (= 1 (count (filter #(> % 1) (vals (frequencies (map :face hand)))))))
+
+(defn- pair-scoring [hand]
+  (let [[pair-face _] (first (filter #(= 2 (second %)) (frequencies (map :face hand))))]
+    (str "pair of " pair-face))
+  )
+
 (defn hand [hand-description]
   (-> hand-description
       split-in-card-descriptions
       create-cards))
 
 (defn score [hand]
-  (if (flush? hand)
-    (flush-scoring)
-    (high-card-scoring hand)))
+  (cond
+    (flush? hand) (flush-scoring)
+    (pair? hand) (pair-scoring hand)
+    :else (high-card-scoring hand)))
