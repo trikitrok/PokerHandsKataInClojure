@@ -15,9 +15,13 @@
     (hand "2S 8S AS QS 3S") => {:hand-type :flush :highest-card "A"})
 
   (fact
-    "scores a Pair hand"
+    "can be a Pair hand"
     (hand "2S 8D 5C QS 2D") => {:hand-type :pair :pair-card ["2"] :no-pair-cards ["Q" "8" "5"]})
 
   (fact
-    "scores a Two Pair hand"
-    (hand "2S 5D 5C QS 2D") => {:hand-type :two-pairs :pair-cards ["5" "2"] :no-pair-cards ["Q"]}))
+    "can be a Two Pair hand"
+    (hand "2S 5D 5C QS 2D") => {:hand-type :two-pairs :pair-cards ["5" "2"] :no-pair-cards ["Q"]})
+
+  (fact
+    "can be a Three of a Kind hand"
+    (hand "5S 5D 5C QS 2D") => {:hand-type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]}))

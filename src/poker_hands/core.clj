@@ -60,11 +60,34 @@
    :pair-cards    (pair-cards hand)
    :no-pair-cards (no-pair-cards hand)})
 
+(defn- face-triplets [hand]
+  (filter #(= 3 (second %)) (frequencies (pluck-face hand))))
+
+(defn- no-face-triplets [hand]
+  (filter #(> 3 (second %)) (frequencies (pluck-face hand))))
+
+(defn- triplet? [hand]
+  (= 1 (count (face-triplets hand))))
+
+(defn- triplet-cards [hand]
+  (sort #(> (compute-value %1) (compute-value %2))
+        (map first (face-triplets hand))))
+
+(defn- no-triplet-cards [hand]
+  (sort #(> (compute-value %1) (compute-value %2))
+        (map first (no-face-triplets hand))))
+
+(defn- a-triplet [hand]
+  {:hand-type :triplet
+   :triplet-card (triplet-cards hand)
+   :no-triplet-cards (no-triplet-cards hand)})
+
 (defn- categorize [hand]
   (cond
     (flush? hand) (a-flush hand)
     (pair? hand) (a-pair hand)
     (two-pairs? hand) (a-two-pairs hand)
+    (triplet? hand) (a-triplet hand)
     :else (a-high-card hand)))
 
 (defn hand [hand-description]
