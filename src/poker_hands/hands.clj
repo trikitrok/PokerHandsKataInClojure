@@ -142,7 +142,7 @@
       cards/split-in-card-descriptions
       cards/create-cards))
 
-(defn- categorize [hand]
+(defn- classify [hand]
   (cond
     (and (flush? hand) (not (straight? hand))) (a-flush hand)
     (and (pair? hand) (not (triplet? hand))) (a-pair hand)
@@ -157,4 +157,4 @@
 (defn hand [hand-description]
   (-> hand-description
       create-hand
-      categorize))
+      classify))
