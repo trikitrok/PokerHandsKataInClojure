@@ -64,7 +64,7 @@
         (black-player-with examples/straight-flush-with-6)) => {:winner :no-winner}))
 
   (facts
-    "Four of a kind"
+    "Four of a kind hand"
     (fact
       "beats any other kind of hand except a Straight Flush"
       (let [black-player-with-four-kind-of-5 (black-player-with examples/four-kind-of-5)
@@ -112,4 +112,51 @@
 
         (compare-hands
           (white-player-with examples/four-kind-of-6)
-          (black-player-with examples/four-kind-of-6)) => {:winner :no-winner}))))
+          (black-player-with examples/four-kind-of-6)) => {:winner :no-winner})))
+
+  (facts
+    "Full house hand"
+    (fact
+      "beats any other kind of hand except Straigh Flush and Four of a Kind"
+      (let [white-player-with-full-house-of-5-2 (white-player-with examples/full-house-of-5-2)
+            resulting-in-white-player-with-full-house-of-5-2-win {:winner  :white
+                                                                  :message "with a full house of three 5 and two 2"}]
+
+        (compare-hands
+          (black-player-with examples/flush-with-A)
+          white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
+
+        (compare-hands
+          (black-player-with examples/straight-with-Q)
+          white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
+
+        (compare-hands
+          (black-player-with examples/triplet-of-5)
+          white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
+
+        (compare-hands
+          (black-player-with examples/two-pairs-of-5-2)
+          white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
+
+        (compare-hands
+          (black-player-with examples/pair-of-2)
+          white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
+
+        (compare-hands
+          (black-player-with examples/high-card-with-K)
+          white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win))
+
+    (fact
+      "beats or ties with one of its kind"
+
+      (compare-hands
+        (white-player-with examples/full-house-of-9-4)
+        (black-player-with examples/full-house-of-8-A)) => {:winner  :white
+                                                            :message "with a full house of three 9 and two 4"}
+      (compare-hands
+        (white-player-with examples/full-house-of-8-K)
+        (black-player-with examples/full-house-of-8-A)) => {:winner  :black
+                                                            :message "with a full house of three 8 and two A"}
+      (compare-hands
+        (white-player-with examples/full-house-of-8-K)
+        (black-player-with examples/full-house-of-8-K)) => {:winner :no-winner})))
