@@ -8,35 +8,35 @@
 
   (fact
     "can be a High card hand"
-    (hand "2H 3D 5S 9C 4D") => {:type :high-card :highest-card "9"}
-    (hand "2H 8D 5S 9C KD") => {:type :high-card :highest-card "K"})
+    (hand "2H 3D 5S 9C 4D") => examples/high-card-with-9
+    (hand "2H 8D 5S 9C KD") => examples/high-card-with-K)
 
   (fact
     "can be a Flush hand"
-    (hand "2S 8S AS QS 3S") => {:type :flush :highest-card "A"})
+    (hand "2S 8S AS QS 3S") => examples/flush-with-A)
 
   (fact
     "can be a Pair hand"
-    (hand "2S 8D 5C QS 2D") => {:type :pair :pair-card ["2"] :no-pair-cards ["Q" "8" "5"]})
+    (hand "2S 8D 5C QS 2D") => examples/pair-of-2)
 
   (fact
     "can be a Two Pair hand"
-    (hand "2S 5D 5C QS 2D") => {:type :two-pairs :pair-cards ["5" "2"] :no-pair-cards ["Q"]})
+    (hand "2S 5D 5C QS 2D") => examples/two-pairs-of-5-2)
 
   (fact
     "can be a Three of a Kind hand"
-    (hand "5S 5D 5C QS 2D") => {:type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]})
+    (hand "5S 5D 5C QS 2D") => examples/triplet-of-5)
 
   (fact
     "can be a Straight hand"
-    (hand "QS JD 10H 9S 8C") => {:type :straight :highest-card "Q"}
-    (hand "AS KC QH JH 10D") => {:type :straight :highest-card "A"}
+    (hand "QS JD 10H 9S 8C") => examples/straight-with-Q
+    (hand "AS KC QH JH 10D") => examples/straight-with-A
     (let [wheeel-description "5C 4H 3D 2C AS"]
-      (hand wheeel-description) => {:type :straight :highest-card "5"}))
+      (hand wheeel-description) => examples/straight-wheel))
 
   (fact
     "can be a Straight Flush"
-    (hand "QS JS 10S 9S 8S") => {:type :straight-flush :highest-card "Q"})
+    (hand "QS JS 10S 9S 8S") => examples/straight-flush-with-Q)
 
   (fact
     "can be a Full House"
@@ -45,4 +45,3 @@
   (fact
     "can be a Four of a Kind rank"
     (hand "5S 5D 5C QS 5H") => examples/four-kind-of-5))
-

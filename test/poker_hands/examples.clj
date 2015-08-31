@@ -18,6 +18,7 @@
 (def four-kind-of-4-with-kicking-K (hands/map->FourKind {:type :four-kind :four-kind-card ["4"] :no-four-card ["K"]}))
 
 (def high-card-with-K {:type :high-card :highest-card "K"})
+(def high-card-with-9 {:type :high-card :highest-card "9"})
 
 (def pair-of-2 {:type :pair :pair-card ["2"] :no-pair-cards ["Q" "8" "5"]})
 
@@ -26,6 +27,8 @@
 (def triplet-of-5 {:type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]})
 
 (def straight-with-Q {:type :straight :highest-card "Q"})
+(def straight-with-A {:type :straight :highest-card "A"})
+(def straight-wheel {:type :straight :highest-card "5"})
 
 (def flush-with-A {:type :flush :highest-card "A"})
 
