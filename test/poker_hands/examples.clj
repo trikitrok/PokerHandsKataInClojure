@@ -7,12 +7,14 @@
   (merge {:player :white} hand))
 
 (def straight-flush-with-Q {:type :straight-flush :highest-card "Q"})
-
 (def straight-flush-with-K {:type :straight-flush :highest-card "K"})
-
 (def straight-flush-with-A {:type :straight-flush :highest-card "A"})
-
 (def straight-flush-with-6 {:type :straight-flush :highest-card "6"})
+
+(def four-kind-of-5 {:type :four-kind :four-kind-card ["5"] :no-four-card ["Q"]})
+(def four-kind-of-6 {:type :four-kind :four-kind-card ["6"] :no-four-card ["10"]})
+(def four-kind-of-4-with-kicking-Q {:type :four-kind :four-kind-card ["4"] :no-four-card ["Q"]})
+(def four-kind-of-4-with-kicking-K {:type :four-kind :four-kind-card ["4"] :no-four-card ["K"]})
 
 (def high-card-with-K {:type :high-card :highest-card "K"})
 
@@ -27,5 +29,3 @@
 (def flush-with-A {:type :flush :highest-card "A"})
 
 (def full-house-of-5-2 {:type :full-house :triplet-card ["5"] :pair-card ["2"]})
-
-(def four-kind-of-5 {:type :four-kind :four-kind-card ["5"] :no-four-card ["Q"]})
