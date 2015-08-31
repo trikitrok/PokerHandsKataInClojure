@@ -42,3 +42,5 @@
 (keyword (str  :koko))
 (= ::koko (keyword (str  :koko)))
 (= ::koko (keyword :koko))
+(merge {:player :white})
+(partial (merge {:player :white}))
