@@ -126,13 +126,14 @@
     (a-straight hand)
     :type :straight-flush))
 
-(defrecord Full-House [type triplet-card pair-card])
+(defrecord FullHouse [type triplet-card pair-card player])
 
 (defn- a-full-house [hand]
-  (Full-House.
+  (FullHouse.
     :full-house
     (triplet-cards hand)
-    (pair-cards hand)))
+    (pair-cards hand)
+    (:player hand)))
 
 (def ^:private four-kind-pred
   (make-group-selection-pred = 4))
@@ -152,10 +153,14 @@
 (def ^:private four-kind-cards
   (partial subset four-kind-pred))
 
+(defrecord FourKind [type four-kind-card no-four-card player])
+
 (defn- a-four-kind [hand]
-  {:type           :four-kind
-   :four-kind-card (four-kind-cards hand)
-   :no-four-card   (no-four-kind-cards hand)})
+  (FourKind.
+    :four-kind
+    (four-kind-cards hand)
+    (no-four-kind-cards hand)
+    (:player hand)))
 
 (defn- create-hand [hand-description]
   (-> hand-description

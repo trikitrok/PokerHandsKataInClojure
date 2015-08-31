@@ -1,5 +1,7 @@
 (ns poker-hands.tie-breaker
-  (:require [poker-hands.cards :refer [compute-value]]))
+  (:require [poker-hands.cards :refer [compute-value]])
+  (:require [poker-hands.hands])
+  (:import (poker_hands.hands StraightFlush FourKind)))
 
 (defn- highest-card-value [hand]
   (-> hand
@@ -18,24 +20,30 @@
       first
       compute-value))
 
-(defmulti untie :type)
-(defmethod ^:private untie :straight-flush [hand1 hand2]
-  (let [hand1-value (highest-card-value hand1)
-        hand2-value (highest-card-value hand2)]
-    (cond
-      (> hand1-value hand2-value) hand1
-      (< hand1-value hand2-value) hand2
-      :else nil)))
+(defprotocol TieBreaker
+  "Tie-breaking"
+  (untie [this other]))
 
-(defmethod ^:private untie :four-kind [hand1 hand2]
-  (let [hand1-value (four-kind-card-value hand1)
-        hand2-value (four-kind-card-value hand2)]
-    (cond
-      (> hand1-value hand2-value) hand1
-      (< hand1-value hand2-value) hand2
-      :else (let [hand1-kick-value (four-kind-kick-value hand1)
-                  hand2-kick-value (four-kind-kick-value hand2)]
-              (cond
-                (> hand1-kick-value hand2-kick-value) hand1
-                (< hand1-kick-value hand2-kick-value) hand2
-                :else nil)))))
+(extend-protocol TieBreaker
+  StraightFlush
+  (untie [this other]
+    (let [hand1-value (highest-card-value this)
+          hand2-value (highest-card-value other)]
+      (cond
+        (> hand1-value hand2-value) this
+        (< hand1-value hand2-value) other
+        :else nil)))
+
+  FourKind
+  (untie [this other]
+    (let [hand1-value (four-kind-card-value this)
+          hand2-value (four-kind-card-value other)]
+      (cond
+        (> hand1-value hand2-value) this
+        (< hand1-value hand2-value) other
+        :else (let [hand1-kick-value (four-kind-kick-value this)
+                    hand2-kick-value (four-kind-kick-value other)]
+                (cond
+                  (> hand1-kick-value hand2-kick-value) this
+                  (< hand1-kick-value hand2-kick-value) other
+                  :else nil))))))

@@ -1,20 +1,21 @@
-(ns poker-hands.examples)
+(ns poker-hands.examples
+  (:require [poker-hands.hands :as hands]))
 
 (defn black-player-with [hand]
-  (merge {:player :black} hand))
+  (assoc hand :player :black))
 
 (defn white-player-with [hand]
-  (merge {:player :white} hand))
+  (assoc hand :player :white))
 
-(def straight-flush-with-Q {:type :straight-flush :highest-card "Q"})
-(def straight-flush-with-K {:type :straight-flush :highest-card "K"})
-(def straight-flush-with-A {:type :straight-flush :highest-card "A"})
-(def straight-flush-with-6 {:type :straight-flush :highest-card "6"})
+(def straight-flush-with-Q (hands/map->StraightFlush {:type :straight-flush :highest-card "Q"}))
+(def straight-flush-with-K (hands/map->StraightFlush {:type :straight-flush :highest-card "K"}))
+(def straight-flush-with-A (hands/map->StraightFlush {:type :straight-flush :highest-card "A"}))
+(def straight-flush-with-6 (hands/map->StraightFlush {:type :straight-flush :highest-card "6"}))
 
-(def four-kind-of-5 {:type :four-kind :four-kind-card ["5"] :no-four-card ["Q"]})
-(def four-kind-of-6 {:type :four-kind :four-kind-card ["6"] :no-four-card ["10"]})
-(def four-kind-of-4-with-kicking-Q {:type :four-kind :four-kind-card ["4"] :no-four-card ["Q"]})
-(def four-kind-of-4-with-kicking-K {:type :four-kind :four-kind-card ["4"] :no-four-card ["K"]})
+(def four-kind-of-5 (hands/map->FourKind {:type :four-kind :four-kind-card ["5"] :no-four-card ["Q"]}))
+(def four-kind-of-6 (hands/map->FourKind {:type :four-kind :four-kind-card ["6"] :no-four-card ["10"]}))
+(def four-kind-of-4-with-kicking-Q (hands/map->FourKind {:type :four-kind :four-kind-card ["4"] :no-four-card ["Q"]}))
+(def four-kind-of-4-with-kicking-K (hands/map->FourKind {:type :four-kind :four-kind-card ["4"] :no-four-card ["K"]}))
 
 (def high-card-with-K {:type :high-card :highest-card "K"})
 
@@ -28,4 +29,4 @@
 
 (def flush-with-A {:type :flush :highest-card "A"})
 
-(def full-house-of-5-2 {:type :full-house :triplet-card ["5"] :pair-card ["2"]})
+(def full-house-of-5-2 (hands/map->FullHouse {:type :full-house :triplet-card ["5"] :pair-card ["2"]}))
