@@ -44,3 +44,7 @@
 (= ::koko (keyword :koko))
 (merge {:player :white})
 (partial (merge {:player :white}))
+(defrecord Point [x y])
+(def point (Point. 1 2))
+(:type point)
+(class point)
