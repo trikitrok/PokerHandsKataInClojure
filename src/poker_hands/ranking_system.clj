@@ -1,12 +1,13 @@
 (ns poker-hands.ranking-system
   (:require [poker-hands.result-messages :as result])
-  (:require [poker-hands.tie-breaker :as tie-breaker]))
+  (:require [poker-hands.tie-breaker :as tie-breaker])
+  (:import (poker_hands.hands StraightFlush FourKind)))
 
 (def ^:private hands-ranking
-  [:high-card :pair :two-pairs :triplet :straight :flush :full-house :four-kind :straight-flush])
+  [:high-card :pair :two-pairs :triplet :straight :flush :full-house FourKind StraightFlush])
 
 (defn- ranking [hand]
-  (.indexOf hands-ranking (:type hand)))
+  (.indexOf hands-ranking (or (:type hand) (class hand))))
 
 (defn- win [hand]
   {:winner  (:player hand)
