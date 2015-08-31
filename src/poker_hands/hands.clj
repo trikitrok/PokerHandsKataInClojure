@@ -112,22 +112,27 @@
   (or (wheel? hand)
       (consecutives? (sorted-values hand))))
 
+(defrecord StraightFlush [type highest-card])
+
 (defn- a-straight [hand]
-  {:type :straight
-   :highest-card
-         (:face (if (wheel? hand)
-                  (second-highest-card hand)
-                  (highest-card hand)))})
+  (StraightFlush.
+    :straight
+    (:face (if (wheel? hand)
+             (second-highest-card hand)
+             (highest-card hand)))))
 
 (defn- a-straight-flush [hand]
   (assoc
     (a-straight hand)
     :type :straight-flush))
 
+(defrecord Full-House [type triplet-card pair-card])
+
 (defn- a-full-house [hand]
-  {:type         :full-house
-   :triplet-card (triplet-cards hand)
-   :pair-card    (pair-cards hand)})
+  (Full-House.
+    :full-house
+    (triplet-cards hand)
+    (pair-cards hand)))
 
 (def ^:private four-kind-pred
   (make-group-selection-pred = 4))
