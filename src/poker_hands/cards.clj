@@ -20,11 +20,12 @@
    :value (compute-value card-description)
    :suit  (suit card-description)})
 
-(defn by-greater-face-value [face-description1 face-description2]
-  (> (compute-value face-description1)
-     (compute-value face-description2)))
-
-(defn split-in-card-descriptions [hand-description]
+(defn- split-in-card-descriptions [hand-description]
   (clojure.string/split hand-description #" "))
 
-(def create-cards (partial map card))
+(def ^:private create-cards (partial map card))
+
+(defn create-hand [hand-description]
+  (-> hand-description
+      split-in-card-descriptions
+      create-cards))

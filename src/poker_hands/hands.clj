@@ -11,8 +11,12 @@
 (defrecord Straight [cards])
 (defrecord StraightFlush [cards])
 
+(defn by-greater-face-value [face-description1 face-description2]
+  (> (cards/compute-value face-description1)
+     (cards/compute-value face-description2)))
+
 (def ^:private sort-by-greater-face-value
-  (partial sort cards/by-greater-face-value))
+  (partial sort by-greater-face-value))
 
 (def ^:private pluck-faces (partial map :face))
 
@@ -30,12 +34,6 @@
 
 (defn- highest-cards [hand]
   (sort #(> (:value %1) (:value %2)) hand))
-
-(defn- highest-card [hand]
-  (first (highest-cards hand)))
-
-(defn- second-highest-card [hand]
-  (second (highest-cards hand)))
 
 (defn- a-high-card [hand]
   (HighCard.
@@ -124,8 +122,8 @@
 
 (defn- straight-highest-card [hand]
   (:face (if (wheel? hand)
-           (second-highest-card hand)
-           (highest-card hand))))
+           (second (highest-cards hand))
+           (first (highest-cards hand)))))
 
 (defn- a-straight [hand]
   (Straight. [(straight-highest-card hand)]))
@@ -161,11 +159,6 @@
     (concat (four-kind-cards hand)
             (no-four-kind-cards hand))))
 
-(defn- create-hand [hand-description]
-  (-> hand-description
-      cards/split-in-card-descriptions
-      cards/create-cards))
-
 (defn- classify [hand]
   (cond
     (and (flush? hand)
@@ -194,5 +187,5 @@
 
 (defn hand [hand-description]
   (-> hand-description
-      create-hand
+      cards/create-hand
       classify))

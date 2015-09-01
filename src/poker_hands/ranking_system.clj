@@ -3,6 +3,8 @@
   (:require [poker-hands.hands])
   (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
 
+()
+
 (def ^:private hands-ranking
   [HighCard Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush])
 
