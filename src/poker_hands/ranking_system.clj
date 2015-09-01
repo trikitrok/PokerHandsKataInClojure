@@ -1,7 +1,7 @@
 (ns poker-hands.ranking-system
   (:require [poker-hands.cards :refer [compute-value]])
-  (:require [poker-hands.hands])
-  (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
+  (:require [poker-hands.creation])
+  (:import (poker_hands.creation StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
 
 (defprotocol VictoryMessager
   (victory-message [this]))

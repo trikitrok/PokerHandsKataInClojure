@@ -1,37 +1,19 @@
 (ns poker-hands.identification
-  (:require [poker-hands.cards]))
+  (:require [poker-hands.cards :as cards]))
 
-(def ^:private pluck-faces (partial map :face))
+(def ^:private four-kind? (partial cards/groups-of? 1 4))
 
-(defn- faces-subset [group-selection-pred hand]
-  (->> hand
-       pluck-faces
-       frequencies
-       (filter group-selection-pred)))
+(def ^:private pair? (partial cards/groups-of? 1 2))
 
-(defn- groups-of [number size cards]
-  (= number (count (faces-subset (comp (partial = size) second) cards))))
+(def ^:private triplet? (partial cards/groups-of? 1 3))
 
-(def ^:private four-kind? (partial groups-of 1 4))
-
-(def ^:private pair? (partial groups-of 1 2))
-
-(def ^:private triplet? (partial groups-of 1 3))
-
-(def ^:private two-pairs? (partial groups-of 2 2))
+(def ^:private two-pairs? (partial cards/groups-of? 2 2))
 
 (defn- flush? [hand]
   (apply = (map :suit hand)))
 
-(def ^:private pluck-values (partial map :value))
-
-(defn- sorted-values [hand]
-  (->> hand
-       pluck-values
-       sort))
-
-(defn- wheel? [hand]
-  (= (sorted-values hand) [0 1 2 3 12]))
+(defn wheel? [hand]
+  (= (cards/sorted-values hand) [0 1 2 3 12]))
 
 (defn- consecutives? [sorted-values]
   (every? #(= 1 %)
@@ -40,9 +22,9 @@
 
 (defn- straight? [hand]
   (or (wheel? hand)
-      (consecutives? (sorted-values hand))))
+      (consecutives? (cards/sorted-values hand))))
 
-(defn identify [cards]
+(defn identify-hand-type [cards]
   (cond
     (and (flush? cards)
          (not (straight? cards))) {:type :flush :cards cards}

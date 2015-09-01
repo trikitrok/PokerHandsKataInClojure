@@ -1,5 +1,36 @@
 (ns poker-hands.cards-examples)
 
+(defn- identified-cards [cards-type cards]
+  {:type cards-type
+   :cards cards})
+
+(def identified-as-high-card-with
+  (partial identified-cards :high-card))
+
+(def identified-as-flush-with
+  (partial identified-cards :flush))
+
+(def identified-as-pair-with
+  (partial identified-cards :pair))
+
+(def identified-as-two-pairs-with
+  (partial identified-cards :two-pairs))
+
+(def identified-as-triplet-with
+  (partial identified-cards :triplet))
+
+(def identified-as-straight-with
+  (partial identified-cards :straight))
+
+(def identified-as-straight-flush-with
+  (partial identified-cards :straight-flush))
+
+(def identified-as-full-house-with
+  (partial identified-cards :full-house))
+
+(def identified-as-four-kind-with
+  (partial identified-cards :four-kind))
+
 (def higher-cards-7H-9D-5S-3C-2D
   [{:face "7" :suit "H" :value 5} {:face "9" :suit "D" :value 7}
    {:face "5" :suit "S" :value 3} {:face "3" :suit "C" :value 1}
