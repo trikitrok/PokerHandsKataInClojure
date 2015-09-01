@@ -1,4 +1,4 @@
-(ns poker-hands.ranking-system
+(ns poker-hands.ranking
   (:require [poker-hands.cards :refer [compute-value]])
   (:require [poker-hands.creation])
   (:import (poker_hands.creation StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))

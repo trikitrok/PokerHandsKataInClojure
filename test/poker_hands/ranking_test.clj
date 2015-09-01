@@ -1,6 +1,6 @@
-(ns poker-hands.ranking-system-test
+(ns poker-hands.ranking-test
   (:use midje.sweet)
-  (:use [poker-hands.ranking-system])
+  (:use [poker-hands.ranking])
   (:require [poker-hands.types-examples
              :as examples
              :refer [white-player-with black-player-with]]))
