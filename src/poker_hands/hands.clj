@@ -91,10 +91,12 @@
 (def ^:private triplet-cards
   (partial subset triplets-pred))
 
+(defrecord Triplet [cards])
+
 (defn- a-triplet [hand]
-  {:type             :triplet
-   :triplet-card     (triplet-cards hand)
-   :no-triplet-cards (no-triplet-cards hand)})
+  (Triplet.
+    (concat (triplet-cards hand)
+            (no-triplet-cards hand))))
 
 (defn- consecutives? [sorted-values]
   (every? #(= 1 %)

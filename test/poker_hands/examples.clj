@@ -24,7 +24,11 @@
 
 (def two-pairs-of-5-2 {:type :two-pairs :pair-cards ["5" "2"] :no-pair-cards ["Q"]})
 
-(def triplet-of-5 {:type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]})
+(def triplet-of-5 (hands/map->Triplet {:cards ["5" "Q" "2"]}))
+(def triplet-of-5-5-5-3-2 (hands/map->Triplet {:cards ["5" "3" "2"]}))
+(def triplet-of-4-4-4-K-5 (hands/map->Triplet {:cards ["4" "K" "5"]}))
+(def triplet-of-4-4-4-Q-9 (hands/map->Triplet {:cards ["4" "Q" "9"]}))
+(def triplet-of-4-4-4-Q-8 (hands/map->Triplet {:cards ["4" "Q" "8"]}))
 
 (def straight-with-Q (hands/map->Straight {:cards ["Q"]}))
 (def straight-with-A (hands/map->Straight {:cards ["A"]}))

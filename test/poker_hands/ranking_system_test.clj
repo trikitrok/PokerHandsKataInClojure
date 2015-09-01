@@ -230,4 +230,43 @@
 
       (compare-hands
         (black-player-with examples/straight-with-Q)
-        (white-player-with examples/straight-with-Q)) => {:winner  :no-winner})))
+        (white-player-with examples/straight-with-Q)) => {:winner :no-winner}))
+
+  (facts
+    "Three of a kind"
+
+    (fact
+      "only beats Two Pairs, Pair and High Card hands"
+      (let [white-player-with-triplet-of-5 (white-player-with examples/triplet-of-5)
+            resulting-in-white-player-triplet-of-5-win {:winner  :white
+                                                        :message "with a triplet of 5"}]
+
+        (compare-hands
+          white-player-with-triplet-of-5
+          (black-player-with examples/two-pairs-of-5-2)) => resulting-in-white-player-triplet-of-5-win
+
+        (compare-hands
+          white-player-with-triplet-of-5
+          (black-player-with examples/pair-of-2)) => resulting-in-white-player-triplet-of-5-win
+
+        (compare-hands
+          white-player-with-triplet-of-5
+          (black-player-with examples/high-card-with-K)) => resulting-in-white-player-triplet-of-5-win))
+
+    (fact
+      "beats or ties with one of its kind"
+
+      (compare-hands
+        (black-player-with examples/triplet-of-5-5-5-3-2)
+        (white-player-with examples/triplet-of-4-4-4-K-5)) => {:winner  :black
+                                                               :message "with a triplet of 5"}
+
+      (compare-hands
+        (black-player-with examples/triplet-of-4-4-4-K-5)
+        (white-player-with examples/triplet-of-4-4-4-Q-9)) => {:winner  :black
+                                                               :message "with a triplet of 4"}
+
+      (compare-hands
+        (black-player-with examples/triplet-of-4-4-4-Q-9)
+        (white-player-with examples/triplet-of-4-4-4-Q-8)) => {:winner  :black
+                                                               :message "with a triplet of 4"})))
