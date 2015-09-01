@@ -1,10 +1,22 @@
 (ns poker-hands.hands
   (:require [poker-hands.cards :as cards]))
 
+(defrecord HighCard [cards])
+(defrecord Flush [cards])
+(defrecord Pair [cards])
+(defrecord TwoPairs [cards])
+(defrecord Triplet [cards])
+(defrecord FourKind [cards])
+(defrecord FullHouse [cards])
+(defrecord Straight [cards])
+(defrecord StraightFlush [cards])
+
 (def ^:private sort-by-greater-face-value
   (partial sort cards/by-greater-face-value))
 
 (def ^:private pluck-faces (partial map :face))
+
+(def ^:private sorted-faces (comp sort-by-greater-face-value pluck-faces))
 
 (defn- faces-subset [group-selection-pred hand]
   (->> hand
@@ -25,16 +37,12 @@
 (defn- second-highest-card [hand]
   (second (highest-cards hand)))
 
-(defrecord HighCard [cards])
-
 (defn- a-high-card [hand]
   (HighCard.
-    (sort-by-greater-face-value (pluck-faces hand))))
-
-(defrecord Flush [cards])
+    (sorted-faces hand)))
 
 (defn- a-flush [hand]
-  (Flush. (sort-by-greater-face-value (pluck-faces hand))))
+  (Flush. (sorted-faces hand)))
 
 (defn- flush? [hand]
   (apply = (map :suit hand)))
@@ -62,17 +70,12 @@
 (def ^:private pair-cards
   (partial subset pairs-pred))
 
-(defrecord Pair [cards])
-
 (defn- a-pair [hand]
-  (Pair.
-    (concat (pair-cards hand)
-            (no-pair-cards hand))))
+  (Pair. (concat (pair-cards hand)
+                 (no-pair-cards hand))))
 
 (defn- two-pairs? [hand]
   (= 2 (count (face-pairs hand))))
-
-(defrecord TwoPairs [cards])
 
 (defn- a-two-pairs [hand]
   (TwoPairs.
@@ -96,8 +99,6 @@
 
 (def ^:private triplet-cards
   (partial subset triplets-pred))
-
-(defrecord Triplet [cards])
 
 (defn- a-triplet [hand]
   (Triplet.
@@ -126,17 +127,11 @@
            (second-highest-card hand)
            (highest-card hand))))
 
-(defrecord Straight [cards])
-
 (defn- a-straight [hand]
   (Straight. [(straight-highest-card hand)]))
 
-(defrecord StraightFlush [cards])
-
 (defn- a-straight-flush [hand]
   (StraightFlush. [(straight-highest-card hand)]))
-
-(defrecord FullHouse [cards])
 
 (defn- a-full-house [hand]
   (FullHouse.
@@ -160,8 +155,6 @@
 
 (def ^:private four-kind-cards
   (partial subset four-kind-pred))
-
-(defrecord FourKind [cards])
 
 (defn- a-four-kind [hand]
   (FourKind.
