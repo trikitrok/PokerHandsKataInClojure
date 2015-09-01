@@ -187,5 +187,5 @@
 
 (defn hand [hand-description]
   (-> hand-description
-      cards/create-hand
+      cards/create-cards
       classify))
