@@ -29,10 +29,10 @@
   {:type         :high-card
    :highest-card (:face (highest-card hand))})
 
-(defrecord Flush [type cards])
+(defrecord Flush [cards])
 
 (defn- a-flush [hand]
-  (Flush. :flush (pluck-faces hand)))
+  (Flush. (pluck-faces hand)))
 
 (defn- flush? [hand]
   (apply = (map :suit hand)))
