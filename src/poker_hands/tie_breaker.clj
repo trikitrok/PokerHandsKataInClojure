@@ -3,73 +3,53 @@
   (:require [poker-hands.hands])
   (:import (poker_hands.hands StraightFlush FourKind FullHouse)))
 
-(defn- highest-card-value [hand]
+(defn- card-value [value-type hand]
   (-> hand
-      :highest-card
+      value-type
       compute-value))
 
-(defn- four-kind-card-value [hand]
-  (-> hand
-      :four-kind-card
-      first
-      compute-value))
+(def ^:private highest-card-value
+  (partial card-value :highest-card))
 
-(defn- four-kind-kick-value [hand]
-  (-> hand
-      :no-four-card
-      first
-      compute-value))
+(def ^:private four-kind-card-value
+  (partial card-value :four-kind-card))
 
-(defn- triplet-card-value [hand]
-  (-> hand
-      :triplet-card
-      first
-      compute-value))
+(def ^:private four-kind-kick-value
+  (partial card-value :no-four-card))
 
-(defn- pair-card-value [hand]
-  (-> hand
-      :pair-card
-      first
-      compute-value))
+(def ^:private triplet-card-value
+  (partial card-value :triplet-card))
+
+(def ^:private pair-card-value
+  (partial card-value :pair-card))
 
 (defprotocol TieBreaker
   "Tie-breaking"
   (untie [this other]))
 
+(defn- untie-hands [hand1 hand2 value-fn tie-breaking-fn]
+  (let [hand1-value (value-fn hand1)
+        hand2-value (value-fn hand2)]
+    (cond
+      (> hand1-value hand2-value) hand1
+      (< hand1-value hand2-value) hand2
+      :else (tie-breaking-fn hand1 hand2))))
+
 (extend-protocol TieBreaker
   StraightFlush
   (untie [this other]
-    (let [hand1-value (highest-card-value this)
-          hand2-value (highest-card-value other)]
-      (cond
-        (> hand1-value hand2-value) this
-        (< hand1-value hand2-value) other
-        :else nil)))
+    (untie-hands this other highest-card-value (fn [_ _] nil)))
 
   FourKind
   (untie [this other]
-    (let [hand1-value (four-kind-card-value this)
-          hand2-value (four-kind-card-value other)]
-      (cond
-        (> hand1-value hand2-value) this
-        (< hand1-value hand2-value) other
-        :else (let [hand1-kick-value (four-kind-kick-value this)
-                    hand2-kick-value (four-kind-kick-value other)]
-                (cond
-                  (> hand1-kick-value hand2-kick-value) this
-                  (< hand1-kick-value hand2-kick-value) other
-                  :else nil)))))
+    (untie-hands
+      this other four-kind-card-value
+      (fn [this other]
+        (untie-hands this other four-kind-kick-value (fn [_ _] nil)))))
 
   FullHouse
   (untie [this other]
-    (let [hand1-value (triplet-card-value this)
-          hand2-value (triplet-card-value other)]
-      (cond
-        (> hand1-value hand2-value) this
-        (< hand1-value hand2-value) other
-        :else (let [hand1-kick-value (pair-card-value this)
-                    hand2-kick-value (pair-card-value other)]
-                (cond
-                  (> hand1-kick-value hand2-kick-value) this
-                  (< hand1-kick-value hand2-kick-value) other
-                  :else nil))))))
+    (untie-hands
+      this other triplet-card-value
+      (fn [this other]
+        (untie-hands this other pair-card-value (fn [_ _] nil))))))
