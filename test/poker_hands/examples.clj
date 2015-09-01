@@ -26,9 +26,9 @@
 
 (def triplet-of-5 {:type :triplet :triplet-card ["5"] :no-triplet-cards ["Q" "2"]})
 
-(def straight-with-Q {:type :straight :highest-card "Q"})
-(def straight-with-A {:type :straight :highest-card "A"})
-(def straight-wheel {:type :straight :highest-card "5"})
+(def straight-with-Q (hands/map->Straight {:cards ["Q"]}))
+(def straight-with-A (hands/map->Straight {:cards ["A"]}))
+(def straight-wheel (hands/map->Straight {:cards ["5"]}))
 
 (def flush-of-K-J-9-3-2 (hands/map->Flush {:cards ["K" "J" "9" "3" "2"]}))
 (def flush-of-K-J-7-6-5 (hands/map->Flush {:cards ["K" "J" "7" "6" "5"]}))

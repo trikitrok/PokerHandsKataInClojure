@@ -118,9 +118,10 @@
            (second-highest-card hand)
            (highest-card hand))))
 
+(defrecord Straight [cards])
+
 (defn- a-straight [hand]
-  {:type         :straight
-   :highest-card (straight-highest-card hand)})
+  (Straight. [(straight-highest-card hand)]))
 
 (defrecord StraightFlush [cards])
 
