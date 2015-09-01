@@ -20,7 +20,13 @@
 (def high-card-with-K {:type :high-card :highest-card "K"})
 (def high-card-with-9 {:type :high-card :highest-card "9"})
 
-(def pair-of-2 {:type :pair :pair-card ["2"] :no-pair-cards ["Q" "8" "5"]})
+(def pair-of-2 (hands/map->Pair {:cards ["2" "Q" "8" "5"]}))
+(def pair-of-6-6-4-3-2 (hands/map->Pair {:cards ["6" "4" "3" "2"]}))
+(def pair-of-5-5-A-K-Q (hands/map->Pair {:cards ["5" "A" "K" "Q"]}))
+(def pair-of-5-5-10-K-Q (hands/map->Pair {:cards ["5" "10" "K" "Q"]}))
+(def pair-of-5-5-10-J-Q (hands/map->Pair {:cards ["5" "10" "J" "Q"]}))
+(def pair-of-5-5-10-J-J (hands/map->Pair {:cards ["5" "10" "J" "J"]}))
+
 
 (def two-pairs-of-5-2 (hands/map->TwoPairs {:cards ["5" "2" "Q"]}))
 (def two-pairs-of-J-J-2-2-4 (hands/map->TwoPairs {:cards ["J" "2" "4"]}))

@@ -60,10 +60,12 @@
 (def ^:private pair-cards
   (partial subset pairs-pred))
 
+(defrecord Pair [cards])
+
 (defn- a-pair [hand]
-  {:type          :pair
-   :pair-card     (pair-cards hand)
-   :no-pair-cards (no-pair-cards hand)})
+  (Pair.
+    (concat (pair-cards hand)
+            (no-pair-cards hand))))
 
 (defn- two-pairs? [hand]
   (= 2 (count (face-pairs hand))))

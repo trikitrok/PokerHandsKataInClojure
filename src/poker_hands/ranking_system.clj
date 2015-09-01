@@ -1,10 +1,10 @@
 (ns poker-hands.ranking-system
   (:require [poker-hands.cards :refer [compute-value]])
   (:require [poker-hands.hands])
-  (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs)))
+  (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair)))
 
 (def ^:private hands-ranking
-  [:high-card :pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush])
+  [:high-card Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush])
 
 (defn- ranking [hand]
   (.indexOf hands-ranking (or (:type hand) (class hand))))
@@ -32,6 +32,9 @@
 
 (defmethod ^:private victory-message TwoPairs [hand]
   (str "with pairs of " (first (:cards hand)) " and " (second (:cards hand))))
+
+(defmethod ^:private victory-message Pair [hand]
+  (str "with a pair of " (first (:cards hand))))
 
 (defn- win [hand]
   {:winner  (:player hand)
