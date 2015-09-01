@@ -32,7 +32,7 @@
 
 (def flush-with-A {:type :flush :highest-card "A"})
 
-(def full-house-of-5-2 (hands/map->FullHouse {:type :full-house :triplet-card ["5"] :pair-card ["2"]}))
-(def full-house-of-9-4  (hands/map->FullHouse {:type :full-house :triplet-card ["9"] :pair-card ["4"]}))
-(def full-house-of-8-A (hands/map->FullHouse {:type :full-house :triplet-card ["8"] :pair-card ["A"]}))
-(def full-house-of-8-K (hands/map->FullHouse {:type :full-house :triplet-card ["8"] :pair-card ["K"]}))
+(def full-house-of-5-2 (hands/map->FullHouse {:triplet-card ["5"] :pair-card ["2"]}))
+(def full-house-of-9-4  (hands/map->FullHouse {:triplet-card ["9"] :pair-card ["4"]}))
+(def full-house-of-8-A (hands/map->FullHouse {:triplet-card ["8"] :pair-card ["A"]}))
+(def full-house-of-8-K (hands/map->FullHouse {:triplet-card ["8"] :pair-card ["K"]}))

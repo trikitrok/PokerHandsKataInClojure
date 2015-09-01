@@ -126,11 +126,10 @@
 (defn- a-straight-flush [hand]
   (StraightFlush. (straight-highest-card hand)))
 
-(defrecord FullHouse [type triplet-card pair-card player])
+(defrecord FullHouse [triplet-card pair-card player])
 
 (defn- a-full-house [hand]
   (FullHouse.
-    :full-house
     (triplet-cards hand)
     (pair-cards hand)
     (:player hand)))
