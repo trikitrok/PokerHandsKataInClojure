@@ -7,10 +7,10 @@
 (defn white-player-with [hand]
   (assoc hand :player :white))
 
-(def straight-flush-with-Q (hands/map->StraightFlush {:highest-card "Q"}))
-(def straight-flush-with-K (hands/map->StraightFlush {:highest-card "K"}))
-(def straight-flush-with-A (hands/map->StraightFlush {:highest-card "A"}))
-(def straight-flush-with-6 (hands/map->StraightFlush {:highest-card "6"}))
+(def straight-flush-with-Q (hands/map->StraightFlush {:cards ["Q"]}))
+(def straight-flush-with-K (hands/map->StraightFlush {:cards ["K"]}))
+(def straight-flush-with-A (hands/map->StraightFlush {:cards ["A"]}))
+(def straight-flush-with-6 (hands/map->StraightFlush {:cards ["6"]}))
 
 (def four-kind-of-5 (hands/map->FourKind {:four-kind-card ["5"] :no-four-card ["Q"]}))
 (def four-kind-of-6 (hands/map->FourKind {:four-kind-card ["6"] :no-four-card ["10"]}))
@@ -33,7 +33,7 @@
 (def flush-of-K-J-9-3-2 (hands/map->Flush {:cards ["K" "J" "9" "3" "2"]}))
 (def flush-of-K-J-7-6-5 (hands/map->Flush {:cards ["K" "J" "7" "6" "5"]}))
 
-(def full-house-of-5-2 (hands/map->FullHouse {:triplet-card ["5"] :pair-card ["2"]}))
-(def full-house-of-9-4  (hands/map->FullHouse {:triplet-card ["9"] :pair-card ["4"]}))
-(def full-house-of-8-A (hands/map->FullHouse {:triplet-card ["8"] :pair-card ["A"]}))
-(def full-house-of-8-K (hands/map->FullHouse {:triplet-card ["8"] :pair-card ["K"]}))
+(def full-house-of-5-2 (hands/map->FullHouse {:cards ["5" "2"]}))
+(def full-house-of-9-4  (hands/map->FullHouse {:cards ["9" "4"]}))
+(def full-house-of-8-A (hands/map->FullHouse {:cards ["8" "A"]}))
+(def full-house-of-8-K (hands/map->FullHouse {:cards ["8" "K"]}))

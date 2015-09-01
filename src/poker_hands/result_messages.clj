@@ -3,11 +3,11 @@
 
 (def ^:private four-kind-card (comp first :four-kind-card))
 
-(def ^:private full-house-triplet-card (comp first :triplet-card))
+(def ^:private full-house-triplet-card (comp first :cards))
 
 (def ^:private flush-cards (comp (partial clojure.string/join " ") :cards))
 
-(def ^:private full-house-pair-card (comp first :pair-card))
+(def ^:private full-house-pair-card (comp second :cards))
 
 (defmulti victory-message class)
 

@@ -8,9 +8,6 @@
       value-type
       compute-value))
 
-(def ^:private highest-card-value
-  (partial card-value :highest-card))
-
 (def ^:private four-kind-card-value
   (partial card-value :four-kind-card))
 
@@ -53,7 +50,7 @@
 (extend-protocol TieBreaker
   StraightFlush
   (untie [this other]
-    (untie-hands this other highest-card-value (fn [_ _] nil)))
+    (untie-using-first-highest-card this other))
 
   FourKind
   (untie [this other]
@@ -64,10 +61,7 @@
 
   FullHouse
   (untie [this other]
-    (untie-hands
-      this other triplet-card-value
-      (fn [this other]
-        (untie-hands this other pair-card-value (fn [_ _] nil)))))
+    (untie-using-first-highest-card this other))
 
   Flush
   (untie [this other]

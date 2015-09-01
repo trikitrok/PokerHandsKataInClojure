@@ -119,21 +119,20 @@
            (highest-card hand))))
 
 (defn- a-straight [hand]
-  {:type :straight
+  {:type         :straight
    :highest-card (straight-highest-card hand)})
 
-(defrecord StraightFlush [highest-card])
+(defrecord StraightFlush [cards])
 
 (defn- a-straight-flush [hand]
-  (StraightFlush. (straight-highest-card hand)))
+  (StraightFlush. [(straight-highest-card hand)]))
 
-(defrecord FullHouse [triplet-card pair-card player])
+(defrecord FullHouse [cards])
 
 (defn- a-full-house [hand]
   (FullHouse.
-    (triplet-cards hand)
-    (pair-cards hand)
-    (:player hand)))
+    (concat (triplet-cards hand)
+            (pair-cards hand))))
 
 (def ^:private four-kind-pred
   (make-group-selection-pred = 4))
@@ -153,13 +152,12 @@
 (def ^:private four-kind-cards
   (partial subset four-kind-pred))
 
-(defrecord FourKind [four-kind-card no-four-card player])
+(defrecord FourKind [four-kind-card no-four-card])
 
 (defn- a-four-kind [hand]
   (FourKind.
     (four-kind-cards hand)
-    (no-four-kind-cards hand)
-    (:player hand)))
+    (no-four-kind-cards hand)))
 
 (defn- create-hand [hand-description]
   (-> hand-description
