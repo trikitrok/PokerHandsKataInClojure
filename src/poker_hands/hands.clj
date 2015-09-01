@@ -25,14 +25,16 @@
 (defn- second-highest-card [hand]
   (second (highest-cards hand)))
 
+(defrecord HighCard [cards])
+
 (defn- a-high-card [hand]
-  {:type         :high-card
-   :highest-card (:face (highest-card hand))})
+  (HighCard.
+    (sort-by-greater-face-value (pluck-faces hand))))
 
 (defrecord Flush [cards])
 
 (defn- a-flush [hand]
-  (Flush. (pluck-faces hand)))
+  (Flush. (sort-by-greater-face-value (pluck-faces hand))))
 
 (defn- flush? [hand]
   (apply = (map :suit hand)))

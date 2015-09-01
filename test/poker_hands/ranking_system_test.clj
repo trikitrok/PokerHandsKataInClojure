@@ -17,7 +17,7 @@
         (compare-hands
           white-player-with-straight-flush
           (black-player-with
-            examples/high-card-with-K)) => resulting-in-white-player-with-straight-flush-win
+            examples/high-card-with-K-J-9-7-5)) => resulting-in-white-player-with-straight-flush-win
 
         (compare-hands
           (black-player-with examples/pair-of-2)
@@ -96,7 +96,7 @@
 
         (compare-hands
           black-player-with-four-kind-of-5
-          (white-player-with examples/high-card-with-K)) => resulting-in-black-player-with-four-kind-of-5-win)
+          (white-player-with examples/high-card-with-K-J-9-7-5)) => resulting-in-black-player-with-four-kind-of-5-win)
 
       (fact
         "beats or ties with one of its kind"
@@ -143,7 +143,7 @@
           white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
 
         (compare-hands
-          (black-player-with examples/high-card-with-K)
+          (black-player-with examples/high-card-with-K-J-9-7-5)
           white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win))
 
     (fact
@@ -186,7 +186,7 @@
 
         (compare-hands
           black-player-with-flush-of-A
-          (white-player-with examples/high-card-with-K)) => resulting-in-black-player-with-flush-of-A-win))
+          (white-player-with examples/high-card-with-K-J-9-7-5)) => resulting-in-black-player-with-flush-of-A-win))
 
     (fact
       "beats or ties with one of its kind"
@@ -219,7 +219,7 @@
 
         (compare-hands
           white-player-with-straight-with-A
-          (black-player-with examples/high-card-with-K)) => resulting-in-white-player-with-straight-with-A-win))
+          (black-player-with examples/high-card-with-K-J-9-7-5)) => resulting-in-white-player-with-straight-with-A-win))
 
     (fact
       "beats or ties with one of its kind"
@@ -251,7 +251,7 @@
 
         (compare-hands
           white-player-with-triplet-of-5
-          (black-player-with examples/high-card-with-K)) => resulting-in-white-player-with-triplet-of-5-win))
+          (black-player-with examples/high-card-with-K-J-9-7-5)) => resulting-in-white-player-with-triplet-of-5-win))
 
     (fact
       "beats or ties with one of its kind"
@@ -312,7 +312,7 @@
       "only beats High Card hands"
       (compare-hands
         (black-player-with examples/pair-of-2)
-        (white-player-with examples/high-card-with-K)) => {:winner  :black
+        (white-player-with examples/high-card-with-K-J-9-7-5)) => {:winner  :black
                                                            :message "with a pair of 2"})
 
     (fact
@@ -326,7 +326,7 @@
       (compare-hands
         (black-player-with examples/pair-of-5-5-A-K-Q)
         (white-player-with examples/pair-of-5-5-10-K-Q)) => {:winner  :black
-                                                            :message "with a pair of 5"}
+                                                             :message "with a pair of 5"}
 
       (compare-hands
         (black-player-with examples/pair-of-5-5-10-J-Q)
@@ -340,4 +340,17 @@
 
       (compare-hands
         (black-player-with examples/pair-of-2)
-        (white-player-with examples/pair-of-2)) => {:winner :no-winner})))
+        (white-player-with examples/pair-of-2)) => {:winner :no-winner}))
+
+  (facts
+    "High card hands"
+    (fact
+      "beats or ties with one of its kind"
+
+      (compare-hands (black-player-with examples/high-card-with-K-J-9-7-5)
+                     (white-player-with examples/high-card-with-9-7-5-3-2)) => {:winner  :black
+                                                                                :message "with a hig card of K"}
+
+      (compare-hands (black-player-with examples/high-card-with-A-J-9-5-3)
+                     (white-player-with examples/high-card-with-A-10-9-6-4)) => {:winner   :black
+                                                                                 :message "with a hig card of A"})))

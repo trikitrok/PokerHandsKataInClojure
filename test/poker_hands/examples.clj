@@ -17,8 +17,10 @@
 (def four-kind-of-4-with-kicking-Q (hands/map->FourKind {:cards ["4" "Q"]}))
 (def four-kind-of-4-with-kicking-K (hands/map->FourKind {:cards ["4" "K"]}))
 
-(def high-card-with-K {:type :high-card :highest-card "K"})
-(def high-card-with-9 {:type :high-card :highest-card "9"})
+(def high-card-with-K-J-9-7-5 (hands/map->HighCard {:cards ["K" "J" "9" "7" "5"]}))
+(def high-card-with-9-7-5-3-2 (hands/map->HighCard {:cards ["9" "7" "5" "3" "2"]}))
+(def high-card-with-A-J-9-5-3 (hands/map->HighCard {:cards ["A" "J" "9" "5" "3"]}))
+(def high-card-with-A-10-9-6-4 (hands/map->HighCard {:cards ["A" "10" "9" "6" "4"]}))
 
 (def pair-of-2 (hands/map->Pair {:cards ["2" "Q" "8" "5"]}))
 (def pair-of-6-6-4-3-2 (hands/map->Pair {:cards ["6" "4" "3" "2"]}))
@@ -49,6 +51,6 @@
 (def flush-of-K-J-7-6-5 (hands/map->Flush {:cards ["K" "J" "7" "6" "5"]}))
 
 (def full-house-of-5-2 (hands/map->FullHouse {:cards ["5" "2"]}))
-(def full-house-of-9-4  (hands/map->FullHouse {:cards ["9" "4"]}))
+(def full-house-of-9-4 (hands/map->FullHouse {:cards ["9" "4"]}))
 (def full-house-of-8-A (hands/map->FullHouse {:cards ["8" "A"]}))
 (def full-house-of-8-K (hands/map->FullHouse {:cards ["8" "K"]}))

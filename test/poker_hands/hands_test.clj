@@ -8,8 +8,8 @@
 
   (fact
     "can be a High card hand"
-    (hand "2H 3D 5S 9C 4D") => examples/high-card-with-9
-    (hand "2H 8D 5S 9C KD") => examples/high-card-with-K)
+    (hand "7H 9D 5S 3C 2D") => examples/high-card-with-9-7-5-3-2
+    (hand "5H 7D JS 9C KD") => examples/high-card-with-K-J-9-7-5)
 
   (fact
     "can be a Flush hand"
