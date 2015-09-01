@@ -1,7 +1,7 @@
 (ns poker-hands.hands-test
   (:use midje.sweet)
   (:use [poker-hands.hands])
-  (:require [poker-hands.examples :as examples]))
+  (:require [poker-hands.types-examples :as examples]))
 
 (facts
   "A poker hand"
@@ -35,13 +35,13 @@
       (hand wheeel-description) => examples/straight-wheel))
 
   (fact
-    "can be a Straight Flush"
+    "can be a Straight Flush hand"
     (hand "QS JS 10S 9S 8S") => examples/straight-flush-with-Q)
 
   (fact
-    "can be a Full House"
+    "can be a Full House hand"
     (hand "5S 2S 5D 2D 5C") => examples/full-house-of-5-2)
 
   (fact
-    "can be a Four of a Kind rank"
+    "can be a Four of a Kind hand"
     (hand "5S 5D 5C QS 5H") => examples/four-kind-of-5))

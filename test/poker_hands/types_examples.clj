@@ -1,4 +1,4 @@
-(ns poker-hands.examples
+(ns poker-hands.types-examples
   (:require [poker-hands.hands :as hands]))
 
 (defn black-player-with [hand]
