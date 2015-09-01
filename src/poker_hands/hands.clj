@@ -68,10 +68,12 @@
 (defn- two-pairs? [hand]
   (= 2 (count (face-pairs hand))))
 
+(defrecord TwoPairs [cards])
+
 (defn- a-two-pairs [hand]
-  {:type          :two-pairs
-   :pair-cards    (pair-cards hand)
-   :no-pair-cards (no-pair-cards hand)})
+  (TwoPairs.
+    (concat (pair-cards hand)
+            (no-pair-cards hand))))
 
 (def ^:private triplets-pred
   (make-group-selection-pred = 3))

@@ -22,7 +22,12 @@
 
 (def pair-of-2 {:type :pair :pair-card ["2"] :no-pair-cards ["Q" "8" "5"]})
 
-(def two-pairs-of-5-2 {:type :two-pairs :pair-cards ["5" "2"] :no-pair-cards ["Q"]})
+(def two-pairs-of-5-2 (hands/map->TwoPairs {:cards ["5" "2" "Q"]}))
+(def two-pairs-of-J-J-2-2-4 (hands/map->TwoPairs {:cards ["J" "2" "4"]}))
+(def two-pairs-of-10-10-9-9-8 (hands/map->TwoPairs {:cards ["10" "9" "8"]}))
+(def two-pairs-of-10-10-5-5-K (hands/map->TwoPairs {:cards ["10" "5" "K"]}))
+(def two-pairs-of-10-10-5-5-A (hands/map->TwoPairs {:cards ["10" "5" "A"]}))
+
 
 (def triplet-of-5 (hands/map->Triplet {:cards ["5" "Q" "2"]}))
 (def triplet-of-5-5-5-3-2 (hands/map->Triplet {:cards ["5" "3" "2"]}))

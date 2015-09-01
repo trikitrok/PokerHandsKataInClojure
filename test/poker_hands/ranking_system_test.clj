@@ -238,20 +238,20 @@
     (fact
       "only beats Two Pairs, Pair and High Card hands"
       (let [white-player-with-triplet-of-5 (white-player-with examples/triplet-of-5)
-            resulting-in-white-player-triplet-of-5-win {:winner  :white
+            resulting-in-white-player-with-triplet-of-5-win {:winner  :white
                                                         :message "with a triplet of 5"}]
 
         (compare-hands
           white-player-with-triplet-of-5
-          (black-player-with examples/two-pairs-of-5-2)) => resulting-in-white-player-triplet-of-5-win
+          (black-player-with examples/two-pairs-of-5-2)) => resulting-in-white-player-with-triplet-of-5-win
 
         (compare-hands
           white-player-with-triplet-of-5
-          (black-player-with examples/pair-of-2)) => resulting-in-white-player-triplet-of-5-win
+          (black-player-with examples/pair-of-2)) => resulting-in-white-player-with-triplet-of-5-win
 
         (compare-hands
           white-player-with-triplet-of-5
-          (black-player-with examples/high-card-with-K)) => resulting-in-white-player-triplet-of-5-win))
+          (black-player-with examples/high-card-with-K)) => resulting-in-white-player-with-triplet-of-5-win))
 
     (fact
       "beats or ties with one of its kind"
@@ -269,4 +269,39 @@
       (compare-hands
         (black-player-with examples/triplet-of-4-4-4-Q-9)
         (white-player-with examples/triplet-of-4-4-4-Q-8)) => {:winner  :black
-                                                               :message "with a triplet of 4"})))
+                                                               :message "with a triplet of 4"}))
+
+  (facts
+    "Two pairs hand"
+
+    (fact
+      "only beats Pair and High Card hands"
+      (let [white-player-with-two-pairs-of-5-2 (white-player-with examples/two-pairs-of-5-2)
+            resulting-in-white-player-with-two-pairs-of-5-2-win {:winner  :white
+                                                        :message "with pairs of 5 and 2"}]
+
+        (compare-hands
+          white-player-with-two-pairs-of-5-2
+          (black-player-with examples/pair-of-2)) => resulting-in-white-player-with-two-pairs-of-5-2-win))
+
+    (fact
+      "beats or ties with one of its kind"
+
+      (compare-hands
+        (black-player-with examples/two-pairs-of-J-J-2-2-4)
+        (white-player-with examples/two-pairs-of-10-10-9-9-8)) => {:winner :black
+                                                                         :message "with pairs of J and 2"}
+
+      (compare-hands
+        (black-player-with examples/two-pairs-of-10-10-5-5-K)
+        (white-player-with examples/two-pairs-of-10-10-9-9-8)) => {:winner :white
+                                                                   :message "with pairs of 10 and 9"}
+
+      (compare-hands
+        (black-player-with examples/two-pairs-of-10-10-5-5-A)
+        (white-player-with examples/two-pairs-of-10-10-5-5-K)) => {:winner :black
+                                                                   :message "with pairs of 10 and 5"}
+
+      (compare-hands
+        (black-player-with examples/two-pairs-of-5-2)
+        (white-player-with examples/two-pairs-of-5-2)) => {:winner :no-winner})))
