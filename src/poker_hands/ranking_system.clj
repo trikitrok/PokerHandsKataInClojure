@@ -3,52 +3,56 @@
   (:require [poker-hands.hands])
   (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
 
-()
+(defprotocol VictoryMessager
+  (victory-message [this]))
 
-(def ^:private hands-ranking
-  [HighCard Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush])
+(extend-protocol VictoryMessager
+  StraightFlush
+  (victory-message [_]
+    "with a straight flush")
+
+  FourKind
+  (victory-message [this]
+    (str "with a four of " (first (:cards this))))
+
+  FullHouse
+  (victory-message [this]
+    (str "with a full house of three " (first (:cards this))
+         " and two " (second (:cards this))))
+
+  Flush
+  (victory-message [this]
+    (str "with a flush of " (clojure.string/join " " (:cards this))))
+
+  Straight
+  (victory-message [this]
+    (str "with a straight of " (first (:cards this))))
+
+  Triplet
+  (victory-message [this]
+    (str "with a triplet of " (first (:cards this))))
+
+  TwoPairs
+  (victory-message [this]
+    (str "with pairs of " (first (:cards this)) " and " (second (:cards this))))
+
+  Pair
+  (victory-message [this]
+    (str "with a pair of " (first (:cards this))))
+
+  HighCard
+  (victory-message [this]
+    (str "with a hig card of " (first (:cards this)))))
 
 (defn- ranking [hand]
-  (.indexOf hands-ranking (class hand)))
-
-(defmulti ^:private victory-message class)
-
-(defmethod ^:private victory-message StraightFlush [_]
-  "with a straight flush")
-
-(defmethod ^:private victory-message FourKind [hand]
-  (str "with a four of " (first (:cards hand))))
-
-(defmethod ^:private victory-message FullHouse [hand]
-  (str "with a full house of three " (first (:cards hand))
-       " and two " (second (:cards hand))))
-
-(defmethod ^:private victory-message Flush [hand]
-  (str "with a flush of " (clojure.string/join " " (:cards hand))))
-
-(defmethod ^:private victory-message Straight [hand]
-  (str "with a straight of " (first (:cards hand))))
-
-(defmethod ^:private victory-message Triplet [hand]
-  (str "with a triplet of " (first (:cards hand))))
-
-(defmethod ^:private victory-message TwoPairs [hand]
-  (str "with pairs of " (first (:cards hand)) " and " (second (:cards hand))))
-
-(defmethod ^:private victory-message Pair [hand]
-  (str "with a pair of " (first (:cards hand))))
-
-(defmethod ^:private victory-message HighCard [hand]
-  (str "with a hig card of " (first (:cards hand))))
-
-(defn- win [hand]
-  {:winner  (:player hand)
-   :message (victory-message hand)})
+  (let [hands-ranking [HighCard Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush]]
+    (.indexOf hands-ranking (class hand))))
 
 (defn- result [hand]
   (if (nil? hand)
     {:winner :no-winner}
-    (win hand)))
+    {:winner  (:player hand)
+     :message (victory-message hand)}))
 
 (defn- untie [hand1 hand2]
   (let
