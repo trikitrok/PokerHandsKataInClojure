@@ -152,12 +152,12 @@
 (def ^:private four-kind-cards
   (partial subset four-kind-pred))
 
-(defrecord FourKind [four-kind-card no-four-card])
+(defrecord FourKind [cards])
 
 (defn- a-four-kind [hand]
   (FourKind.
-    (four-kind-cards hand)
-    (no-four-kind-cards hand)))
+    (concat (four-kind-cards hand)
+            (no-four-kind-cards hand))))
 
 (defn- create-hand [hand-description]
   (-> hand-description

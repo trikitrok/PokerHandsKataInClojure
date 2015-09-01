@@ -12,10 +12,10 @@
 (def straight-flush-with-A (hands/map->StraightFlush {:cards ["A"]}))
 (def straight-flush-with-6 (hands/map->StraightFlush {:cards ["6"]}))
 
-(def four-kind-of-5 (hands/map->FourKind {:four-kind-card ["5"] :no-four-card ["Q"]}))
-(def four-kind-of-6 (hands/map->FourKind {:four-kind-card ["6"] :no-four-card ["10"]}))
-(def four-kind-of-4-with-kicking-Q (hands/map->FourKind {:four-kind-card ["4"] :no-four-card ["Q"]}))
-(def four-kind-of-4-with-kicking-K (hands/map->FourKind {:four-kind-card ["4"] :no-four-card ["K"]}))
+(def four-kind-of-5 (hands/map->FourKind {:cards ["5" "Q"]}))
+(def four-kind-of-6 (hands/map->FourKind {:cards ["6" "10"]}))
+(def four-kind-of-4-with-kicking-Q (hands/map->FourKind {:cards ["4" "Q"]}))
+(def four-kind-of-4-with-kicking-K (hands/map->FourKind {:cards ["4" "K"]}))
 
 (def high-card-with-K {:type :high-card :highest-card "K"})
 (def high-card-with-9 {:type :high-card :highest-card "9"})

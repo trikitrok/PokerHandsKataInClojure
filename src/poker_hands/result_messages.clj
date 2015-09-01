@@ -1,7 +1,7 @@
 (ns poker-hands.result-messages
   (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush)))
 
-(def ^:private four-kind-card (comp first :four-kind-card))
+(def ^:private four-kind-card (comp first :cards))
 
 (def ^:private full-house-triplet-card (comp first :cards))
 
