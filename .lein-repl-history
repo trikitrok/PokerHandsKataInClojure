@@ -48,3 +48,6 @@
 (def point (Point. 1 2))
 (:type point)
 (class point)
+(map vector [1 10 3] [1 5 3])
+(drop-while #(= (first %) (second %)) (map vector [1 10 3] [1 5 3]))
+(first (drop-while #(= (first %) (second %)) (map vector [1 10 3] [1 5 3])))

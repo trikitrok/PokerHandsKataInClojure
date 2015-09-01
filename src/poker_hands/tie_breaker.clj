@@ -1,7 +1,7 @@
 (ns poker-hands.tie-breaker
   (:require [poker-hands.cards :refer [compute-value]])
   (:require [poker-hands.hands])
-  (:import (poker_hands.hands StraightFlush FourKind FullHouse)))
+  (:import (poker_hands.hands StraightFlush FourKind FullHouse Flush)))
 
 (defn- card-value [value-type hand]
   (-> hand
@@ -35,6 +35,21 @@
       (< hand1-value hand2-value) hand2
       :else (tie-breaking-fn hand1 hand2))))
 
+(defn- untie-using-first-highest-card [hand1 hand2]
+  (let
+    [first-different-values
+     (map compute-value
+          (first
+            (drop-while #(= (first %) (second %))
+                        (map vector
+                             (:cards hand1)
+                             (:cards hand2)))))]
+    (if (empty? first-different-values)
+      nil
+      (if (> (first first-different-values) (second first-different-values))
+        hand1
+        hand2))))
+
 (extend-protocol TieBreaker
   StraightFlush
   (untie [this other]
@@ -52,4 +67,8 @@
     (untie-hands
       this other triplet-card-value
       (fn [this other]
-        (untie-hands this other pair-card-value (fn [_ _] nil))))))
+        (untie-hands this other pair-card-value (fn [_ _] nil)))))
+
+  Flush
+  (untie [this other]
+    (untie-using-first-highest-card this other)))

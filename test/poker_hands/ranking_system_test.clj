@@ -41,7 +41,7 @@
         (compare-hands
           white-player-with-straight-flush
           (black-player-with
-            examples/flush-with-A)) => resulting-in-white-player-with-straight-flush-win
+            examples/flush-of-K-J-9-3-2)) => resulting-in-white-player-with-straight-flush-win
 
         (compare-hands
           white-player-with-straight-flush
@@ -76,7 +76,7 @@
 
         (compare-hands
           black-player-with-four-kind-of-5
-          (white-player-with examples/flush-with-A)) => resulting-in-black-player-with-four-kind-of-5-win
+          (white-player-with examples/flush-of-K-J-9-3-2)) => resulting-in-black-player-with-four-kind-of-5-win
 
         (compare-hands
           black-player-with-four-kind-of-5
@@ -123,7 +123,7 @@
                                                                   :message "with a full house of three 5 and two 2"}]
 
         (compare-hands
-          (black-player-with examples/flush-with-A)
+          (black-player-with examples/flush-of-K-J-9-3-2)
           white-player-with-full-house-of-5-2) => resulting-in-white-player-with-full-house-of-5-2-win
 
         (compare-hands
@@ -148,7 +148,6 @@
 
     (fact
       "beats or ties with one of its kind"
-
       (compare-hands
         (white-player-with examples/full-house-of-9-4)
         (black-player-with examples/full-house-of-8-A)) => {:winner  :white
@@ -159,4 +158,43 @@
                                                             :message "with a full house of three 8 and two A"}
       (compare-hands
         (white-player-with examples/full-house-of-8-K)
-        (black-player-with examples/full-house-of-8-K)) => {:winner :no-winner})))
+        (black-player-with examples/full-house-of-8-K)) => {:winner :no-winner}))
+
+  (facts
+    "Flush hand"
+    (fact
+      "beats any other kind of hand except Straigh Flush, Four of a Kind and FullHouse"
+      (let [black-player-with-flush-of-A (black-player-with examples/flush-of-K-J-9-3-2)
+            resulting-in-black-player-with-flush-of-A-win {:winner  :black
+                                                           :message "with a flush of K J 9 3 2"}]
+
+        (compare-hands
+          black-player-with-flush-of-A
+          (white-player-with examples/straight-with-Q)) => resulting-in-black-player-with-flush-of-A-win
+
+        (compare-hands
+          black-player-with-flush-of-A
+          (white-player-with examples/triplet-of-5)) => resulting-in-black-player-with-flush-of-A-win
+
+        (compare-hands
+          black-player-with-flush-of-A
+          (white-player-with examples/two-pairs-of-5-2)) => resulting-in-black-player-with-flush-of-A-win
+
+        (compare-hands
+          black-player-with-flush-of-A
+          (white-player-with examples/pair-of-2)) => resulting-in-black-player-with-flush-of-A-win
+
+        (compare-hands
+          black-player-with-flush-of-A
+          (white-player-with examples/high-card-with-K)) => resulting-in-black-player-with-flush-of-A-win))
+
+    (fact
+      "beats or ties with one of its kind"
+      (compare-hands
+        (white-player-with examples/flush-of-K-J-9-3-2)
+        (black-player-with examples/flush-of-K-J-7-6-5)) => {:winner  :white
+                                                             :message "with a flush of K J 9 3 2"}
+      (compare-hands
+        (white-player-with examples/flush-of-K-J-9-3-2)
+        (black-player-with examples/flush-of-K-J-9-3-2)) => {:winner  :no-winner})
+    ))

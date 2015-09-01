@@ -13,7 +13,7 @@
 
   (fact
     "can be a Flush hand"
-    (hand "2S 8S AS QS 3S") => examples/flush-with-A)
+    (hand "KC JC 9C 3C 2C") => examples/flush-of-K-J-9-3-2)
 
   (fact
     "can be a Pair hand"

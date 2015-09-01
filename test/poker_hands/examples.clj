@@ -30,7 +30,8 @@
 (def straight-with-A {:type :straight :highest-card "A"})
 (def straight-wheel {:type :straight :highest-card "5"})
 
-(def flush-with-A {:type :flush :highest-card "A"})
+(def flush-of-K-J-9-3-2 (hands/map->Flush {:type :flush :cards ["K" "J" "9" "3" "2"]}))
+(def flush-of-K-J-7-6-5 (hands/map->Flush {:type :flush :cards ["K" "J" "7" "6" "5"]}))
 
 (def full-house-of-5-2 (hands/map->FullHouse {:triplet-card ["5"] :pair-card ["2"]}))
 (def full-house-of-9-4  (hands/map->FullHouse {:triplet-card ["9"] :pair-card ["4"]}))
