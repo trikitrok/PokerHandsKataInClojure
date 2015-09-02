@@ -1,32 +1,26 @@
 (ns poker-hands.creation
   (:require [poker-hands.cards :as cards])
-  (:require [poker-hands.identification :as identification]))
-
-(defrecord HighCard [faces])
-(defrecord Flush [faces])
-(defrecord Pair [faces])
-(defrecord TwoPairs [faces])
-(defrecord Triplet [faces])
-(defrecord FourKind [faces])
-(defrecord FullHouse [faces])
-(defrecord Straight [faces])
-(defrecord StraightFlush [faces])
+  (:require [poker-hands.identification :as identification])
+  (:require [poker-hands.hand-types :as hand-types]))
 
 (defn- a-high-card [cards]
-  (HighCard.
+  (hand-types/->HighCard
     (cards/sorted-faces cards)))
 
 (defn- a-flush [cards]
-  (Flush. (cards/sorted-faces cards)))
+  (hand-types/->Flush
+    (cards/sorted-faces cards)))
 
 (defn- a-pair [cards]
-  (Pair. (cards/concat-cards-of-groups-with-and-without 2 cards)))
+  (hand-types/->Pair
+    (cards/concat-cards-of-groups-with-and-without 2 cards)))
 
 (defn- a-triplet [cards]
-  (Triplet. (cards/concat-cards-of-groups-with-and-without 3 cards)))
+  (hand-types/->Triplet
+    (cards/concat-cards-of-groups-with-and-without 3 cards)))
 
 (defn- a-two-pairs [cards]
-  (TwoPairs.
+  (hand-types/->TwoPairs
     (cards/concat-cards-of-groups-with-and-without 2 cards)))
 
 (defn- straight-highest-card-face [cards]
@@ -35,16 +29,20 @@
                 (first (cards/highest-cards cards)))))
 
 (defn- a-straight [cards]
-  (Straight. [(straight-highest-card-face cards)]))
+  (hand-types/->Straight
+    [(straight-highest-card-face cards)]))
 
 (defn- a-straight-flush [cards]
-  (StraightFlush. [(straight-highest-card-face cards)]))
+  (hand-types/->StraightFlush
+    [(straight-highest-card-face cards)]))
 
 (defn- a-full-house [cards]
-  (FullHouse. (cards/concat-cards-of-groups-with-and-without 3 cards)))
+  (hand-types/->FullHouse
+    (cards/concat-cards-of-groups-with-and-without 3 cards)))
 
 (defn- a-four-kind [cards]
-  (FourKind. (cards/concat-cards-of-groups-with-and-without 4 cards)))
+  (hand-types/->FourKind
+    (cards/concat-cards-of-groups-with-and-without 4 cards)))
 
 (def ^:private factories-by-type
   {:high-card      a-high-card

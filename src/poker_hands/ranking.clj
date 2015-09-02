@@ -1,17 +1,12 @@
 (ns poker-hands.ranking
   (:require [poker-hands.cards :refer [face-rank]])
-  (:require [poker-hands.creation])
-  (:import (poker_hands.creation HighCard TwoPairs Pair Triplet Straight Flush FullHouse FourKind StraightFlush)))
-
-(defn- ranking [hand]
-  (let [hands-ranking [HighCard Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush]]
-    (.indexOf hands-ranking (class hand))))
+  (:require [poker-hands.hand-types :as hand-types]))
 
 (defn- first-different-pair-of-ranks [hand1 hand2]
   (map face-rank (first (drop-while #(= (first %) (second %))
-                               (map vector
-                                    (:faces hand1)
-                                    (:faces hand2))))))
+                                    (map vector
+                                         (hand-types/faces hand1)
+                                         (hand-types/faces hand2))))))
 
 (defn- untie [hand1 hand2]
   (let
@@ -28,8 +23,8 @@
     {:winning hand}))
 
 (defn- compute-winner-hand [[hand1 hand2]]
-  (let [ranking1 (ranking hand1)
-        ranking2 (ranking hand2)]
+  (let [ranking1 (hand-types/ranking hand1)
+        ranking2 (hand-types/ranking hand2)]
     (cond
       (> ranking1 ranking2) hand1
       (< ranking1 ranking2) hand2

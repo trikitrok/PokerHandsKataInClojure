@@ -1,6 +1,6 @@
 (ns poker-hands.messages
-  (:require [poker-hands.creation])
-  (:import (poker_hands.creation StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
+  (:require [poker-hands.hand-types])
+  (:import (poker_hands.hand_types StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
 
 (defprotocol VictoryMessager
   (victory-message [this]))
