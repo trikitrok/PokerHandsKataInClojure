@@ -10,7 +10,7 @@
 (def ^:private two-pairs? (partial cards/groups-of? 2 2))
 
 (defn- flush? [hand]
-  (apply = (map :suit hand)))
+  (apply = (map cards/suit hand)))
 
 (defn wheel? [hand]
   (= (cards/sorted-ranks hand) [0 1 2 3 12]))

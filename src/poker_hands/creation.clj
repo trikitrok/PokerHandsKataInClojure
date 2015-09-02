@@ -30,9 +30,9 @@
     (cards/concat-cards-of-groups-with-and-without 2 cards)))
 
 (defn- straight-highest-card-face [cards]
-  (:face (if (identification/wheel? cards)
-           (second (cards/highest-cards cards))
-           (first (cards/highest-cards cards)))))
+  (cards/face (if (identification/wheel? cards)
+                (second (cards/highest-cards cards))
+                (first (cards/highest-cards cards)))))
 
 (defn- a-straight [cards]
   (Straight. [(straight-highest-card-face cards)]))
@@ -47,15 +47,15 @@
   (FourKind. (cards/concat-cards-of-groups-with-and-without 4 cards)))
 
 (def ^:private factories-by-type
-  {:high-card a-high-card
-   :flush a-flush
-   :pair a-pair
-   :triplet a-triplet
-   :two-pairs a-two-pairs
-   :straight a-straight
+  {:high-card      a-high-card
+   :flush          a-flush
+   :pair           a-pair
+   :triplet        a-triplet
+   :two-pairs      a-two-pairs
+   :straight       a-straight
    :straight-flush a-straight-flush
-   :full-house a-full-house
-   :four-kind a-four-kind})
+   :full-house     a-full-house
+   :four-kind      a-four-kind})
 
 (defn create-hand [{cards-type :type cards :cards}]
   (let [factory (get factories-by-type cards-type)]
