@@ -1,5 +1,5 @@
 (ns poker-hands.ranking
-  (:require [poker-hands.cards :refer [compute-value]])
+  (:require [poker-hands.cards :refer [face-rank]])
   (:require [poker-hands.creation])
   (:import (poker_hands.creation HighCard TwoPairs Pair Triplet Straight Flush FullHouse FourKind StraightFlush)))
 
@@ -7,21 +7,18 @@
   (let [hands-ranking [HighCard Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush]]
     (.indexOf hands-ranking (class hand))))
 
-(defn- compute-first-different-pair-of-values [hand1 hand2]
-  (map compute-value
-       (first
-         (drop-while #(= (first %) (second %))
-                     (map vector
-                          (:cards hand1)
-                          (:cards hand2))))))
+(defn- first-different-pair-of-ranks [hand1 hand2]
+  (map face-rank (first (drop-while #(= (first %) (second %))
+                               (map vector
+                                    (:cards hand1)
+                                    (:cards hand2))))))
 
 (defn- untie [hand1 hand2]
   (let
-    [first-different-pair-of-values (compute-first-different-pair-of-values hand1 hand2)]
-    (if (empty? first-different-pair-of-values)
+    [[rank1 rank2 :as first-different-ranks] (first-different-pair-of-ranks hand1 hand2)]
+    (if (empty? first-different-ranks)
       nil
-      (if (> (first first-different-pair-of-values)
-             (second first-different-pair-of-values))
+      (if (> rank1 rank2)
         hand1
         hand2))))
 

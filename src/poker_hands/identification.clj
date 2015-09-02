@@ -13,16 +13,16 @@
   (apply = (map :suit hand)))
 
 (defn wheel? [hand]
-  (= (cards/sorted-values hand) [0 1 2 3 12]))
+  (= (cards/sorted-ranks hand) [0 1 2 3 12]))
 
-(defn- consecutives? [sorted-values]
+(defn- consecutives? [sorted-ranks]
   (every? #(= 1 %)
           (map #(- (second %) (first %))
-               (partition 2 1 sorted-values))))
+               (partition 2 1 sorted-ranks))))
 
 (defn- straight? [hand]
   (or (wheel? hand)
-      (consecutives? (cards/sorted-values hand))))
+      (consecutives? (cards/sorted-ranks hand))))
 
 (defn identify-hand-type [cards]
   (cond
