@@ -2,15 +2,15 @@
   (:require [poker-hands.cards :as cards])
   (:require [poker-hands.identification :as identification]))
 
-(defrecord HighCard [cards])
-(defrecord Flush [cards])
-(defrecord Pair [cards])
-(defrecord TwoPairs [cards])
-(defrecord Triplet [cards])
-(defrecord FourKind [cards])
-(defrecord FullHouse [cards])
-(defrecord Straight [cards])
-(defrecord StraightFlush [cards])
+(defrecord HighCard [faces])
+(defrecord Flush [faces])
+(defrecord Pair [faces])
+(defrecord TwoPairs [faces])
+(defrecord Triplet [faces])
+(defrecord FourKind [faces])
+(defrecord FullHouse [faces])
+(defrecord Straight [faces])
+(defrecord StraightFlush [faces])
 
 (defn- a-high-card [cards]
   (HighCard.
@@ -29,16 +29,16 @@
   (TwoPairs.
     (cards/concat-cards-of-groups-with-and-without 2 cards)))
 
-(defn- straight-highest-card [cards]
+(defn- straight-highest-card-face [cards]
   (:face (if (identification/wheel? cards)
            (second (cards/highest-cards cards))
            (first (cards/highest-cards cards)))))
 
 (defn- a-straight [cards]
-  (Straight. [(straight-highest-card cards)]))
+  (Straight. [(straight-highest-card-face cards)]))
 
 (defn- a-straight-flush [cards]
-  (StraightFlush. [(straight-highest-card cards)]))
+  (StraightFlush. [(straight-highest-card-face cards)]))
 
 (defn- a-full-house [cards]
   (FullHouse. (cards/concat-cards-of-groups-with-and-without 3 cards)))

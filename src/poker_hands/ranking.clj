@@ -10,8 +10,8 @@
 (defn- first-different-pair-of-ranks [hand1 hand2]
   (map face-rank (first (drop-while #(= (first %) (second %))
                                (map vector
-                                    (:cards hand1)
-                                    (:cards hand2))))))
+                                    (:faces hand1)
+                                    (:faces hand2))))))
 
 (defn- untie [hand1 hand2]
   (let
