@@ -88,6 +88,7 @@
 (def black-player-with-pair-of-2-wins
   {:winning (black-player-with examples/pair-of-2)})
 
+; High Card
 (def black-player-with-high-card-with-K-J-9-7-5-wins
   {:winning (black-player-with examples/high-card-with-K-J-9-7-5)})
 
