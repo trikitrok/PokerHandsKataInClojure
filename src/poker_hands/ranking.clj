@@ -19,7 +19,7 @@
 
 (defn- wrap-in-result [hand]
   (if (nil? hand)
-    nil
+    :tie
     {:winning hand}))
 
 (defn- compute-winner-hand [[hand1 hand2]]

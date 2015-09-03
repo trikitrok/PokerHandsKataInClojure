@@ -65,7 +65,7 @@
 
 (defn- compose-tie-message [] "Tie.")
 
-(def ^:private tie? nil?)
+(def ^:private tie? (partial = :tie))
 
 (defn message [result]
   (if (tie? result)

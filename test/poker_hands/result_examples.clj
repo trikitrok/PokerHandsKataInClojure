@@ -3,7 +3,7 @@
              :as examples
              :refer [white-player-with black-player-with]]))
 
-(def tie nil)
+(def tie :tie)
 
 ; Straight Flush
 (def white-player-with-straight-flush-with-Q-wins
