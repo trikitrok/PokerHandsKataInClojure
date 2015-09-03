@@ -311,7 +311,7 @@
 
         (compare-hands
           white-player-with-two-pairs-of-5-2
-          (black-player-with examples/pair-of-2)) 
+          (black-player-with examples/pair-of-2))
         => results/white-player-with-two-pairs-of-5-2-wins))
 
     (fact

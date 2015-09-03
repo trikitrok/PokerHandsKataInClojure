@@ -70,4 +70,3 @@
     (create-hand
       (examples/identified-as-four-kind-with
         examples/four-of-kind-with-5S-5D-5C-QS-5H)) => types/four-kind-of-5))
-

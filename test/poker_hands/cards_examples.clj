@@ -1,7 +1,7 @@
 (ns poker-hands.cards-examples)
 
 (defn- identified-cards [cards-type cards]
-  {:type cards-type
+  {:type  cards-type
    :cards cards})
 
 (def identified-as-high-card-with
@@ -82,8 +82,8 @@
    {:face "8" :suit "S" :rank 6}])
 
 (def full-house-with-5S-2S-5D-2D-5C
-  [{:face "5" :suit "S" :rank 3}{:face "2" :suit "S" :rank 0}
-   {:face "5" :suit "D" :rank 3}{:face "2" :suit "D" :rank 0}
+  [{:face "5" :suit "S" :rank 3} {:face "2" :suit "S" :rank 0}
+   {:face "5" :suit "D" :rank 3} {:face "2" :suit "D" :rank 0}
    {:face "5" :suit "C" :rank 3}])
 
 (def four-of-kind-with-5S-5D-5C-QS-5H
