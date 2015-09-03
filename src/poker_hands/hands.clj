@@ -3,7 +3,7 @@
   (:require [poker-hands.identification :as identification])
   (:require [poker-hands.creation :as creation]))
 
-(defn hand [hand-description]
+(defn create [hand-description]
   (-> hand-description
       cards/create-cards
       identification/identify-hand-type
