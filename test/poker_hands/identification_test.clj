@@ -1,7 +1,7 @@
 (ns poker-hands.identification-test
   (:use midje.sweet)
   (:require [poker-hands.identification :refer [identify-hand-type]])
-  (:require [poker-hands.cards-examples :as examples]))
+  (:require [poker-hands.examples.cards :as examples]))
 
 (facts
   "about poker hands identification"

@@ -3,8 +3,8 @@
 (ns poker-hands.identification-test
   (:use midje.sweet)
   (:require [poker-hands.creation :refer [create-hand]])
-  (:require [poker-hands.cards-examples :as examples])
-  (:require [poker-hands.types-examples :as types]))
+  (:require [poker-hands.examples.cards :as examples])
+  (:require [poker-hands.examples.types :as types]))
 
 (facts
   "about poker hands creation"

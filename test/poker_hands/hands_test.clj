@@ -1,7 +1,7 @@
 (ns poker-hands.hands-test
   (:use midje.sweet)
   (:use [poker-hands.hands])
-  (:require [poker-hands.types-examples :as examples]))
+  (:require [poker-hands.examples.types :as examples]))
 
 (facts
   "A poker hand"

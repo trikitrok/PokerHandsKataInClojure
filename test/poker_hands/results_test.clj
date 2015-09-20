@@ -1,48 +1,48 @@
 (ns poker-hands.results-test
   (:use midje.sweet)
   (:use [poker-hands.results])
-  (:require [poker-hands.result-examples :as result-examples]))
+  (:require [poker-hands.examples.results :as results-examples]))
 
 (facts
   "About results"
   (message
-    result-examples/white-player-with-straight-flush-with-Q-wins)
+    results-examples/white-player-with-straight-flush-with-Q-wins)
   => "White wins. - with a Straight Flush: Q"
 
   (message
-    result-examples/black-player-with-straight-flush-with-A-wins)
+    results-examples/black-player-with-straight-flush-with-A-wins)
   => "Black wins. - with a Straight Flush: A"
 
   (message
-    result-examples/black-player-with-four-kind-of-5-wins)
+    results-examples/black-player-with-four-kind-of-5-wins)
   => "Black wins. - with a Four of Kind: 5"
 
   (message
-    result-examples/white-player-with-full-house-of-5-2-wins)
+    results-examples/white-player-with-full-house-of-5-2-wins)
   => "White wins. - with a Full House of three 5 and two 2"
 
   (message
-    result-examples/black-player-with-flush-of-K-J-9-3-2-wins)
+    results-examples/black-player-with-flush-of-K-J-9-3-2-wins)
   => "Black wins. - with a Flush of K J 9 3 2"
 
   (message
-    result-examples/white-player-with-straight-with-A-wins)
+    results-examples/white-player-with-straight-with-A-wins)
   => "White wins. - with a Straight of A"
 
   (message
-    result-examples/white-player-with-triplet-of-5-wins)
+    results-examples/white-player-with-triplet-of-5-wins)
   => "White wins. - with a Triplet of 5"
 
   (message
-    result-examples/white-player-with-two-pairs-of-5-2-wins)
+    results-examples/white-player-with-two-pairs-of-5-2-wins)
   => "White wins. - with Two Pairs: 5 and 2"
 
   (message
-    result-examples/black-player-with-pair-of-5-5-10-J-Q-wins)
+    results-examples/black-player-with-pair-of-5-5-10-J-Q-wins)
   => "Black wins. - with a Pair: 5"
 
   (message
-    result-examples/black-player-with-high-card-with-K-J-9-7-5-wins)
+    results-examples/black-player-with-high-card-with-K-J-9-7-5-wins)
   => "Black wins. - with a High Card: K J 9 7 5"
 
-  (message result-examples/tie) => "Tie.")
+  (message results-examples/tie) => "Tie.")

@@ -1,4 +1,4 @@
-(ns poker-hands.cards-examples)
+(ns poker-hands.examples.cards)
 
 (defn- identified-cards [cards-type cards]
   {:type  cards-type

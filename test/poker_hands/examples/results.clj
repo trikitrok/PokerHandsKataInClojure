@@ -1,6 +1,5 @@
-(ns poker-hands.result-examples
-  (:require [poker-hands.types-examples
-             :as examples
+(ns poker-hands.examples.results
+  (:require [poker-hands.examples.types :as examples
              :refer [white-player-with black-player-with]]))
 
 (def tie :tie)

@@ -1,9 +1,8 @@
 (ns poker-hands.ranking-test
   (:use midje.sweet)
   (:use [poker-hands.ranking])
-  (:require [poker-hands.result-examples :as results])
-  (:require [poker-hands.types-examples
-             :as examples
+  (:require [poker-hands.examples.results :as results])
+  (:require [poker-hands.examples.types :as examples
              :refer [white-player-with black-player-with]]))
 
 (facts
