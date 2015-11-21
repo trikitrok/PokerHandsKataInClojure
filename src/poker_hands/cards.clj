@@ -51,8 +51,7 @@
        (map rank)
        sort))
 
-(defn highest-cards [cards]
-  (sort #(> (rank %1) (rank %2)) cards))
+(def highest-cards (partial sort-by rank >))
 
 (defn groups-of? [number size cards]
   (= number (count (faces-subset (comp (partial = size) second) cards))))
