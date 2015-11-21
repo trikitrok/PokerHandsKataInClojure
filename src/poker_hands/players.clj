@@ -8,7 +8,3 @@
   (= black player))
 
 (def player :player)
-
-
-
-
