@@ -3,10 +3,10 @@
   (:require [poker-hands.hand-types :as hand-types]))
 
 (defn- first-different-pair-of-ranks [hand1 hand2]
-  (map face-rank (first (drop-while #(= (first %) (second %))
-                                    (map vector
-                                         (hand-types/faces hand1)
-                                         (hand-types/faces hand2))))))
+  (->> (map vector (hand-types/faces hand1) (hand-types/faces hand2))
+       (drop-while #(= (first %) (second %)))
+       first
+       (map face-rank)))
 
 (defn- untie [hand1 hand2]
   (let
@@ -17,10 +17,10 @@
         hand1
         hand2))))
 
-(defn- wrap-in-result [hand]
-  (if (nil? hand)
+(defn- wrap-in-result [winning-hand]
+  (if (nil? winning-hand)
     :tie
-    {:winning hand}))
+    {:winning winning-hand}))
 
 (defn- compute-winner-hand [[hand1 hand2]]
   (let [ranking1 (hand-types/ranking hand1)
