@@ -47,8 +47,8 @@
 
 (defn- sorted-ranks [cards]
   (->> cards
-       (sort-by rank)
-       (map rank)))
+       (map rank)
+       sort))
 
 (defn wheel? [hand]
   (= (sorted-ranks hand) [0 1 2 3 12]))
