@@ -1,8 +1,10 @@
 # poker-hands
 
-The project uses [Midje](https://github.com/marick/Midje/).
+[Poker hands kata](http://codingdojo.org/cgi-bin/index.pl?KataPokerHands).
 
 ## How to run the tests
+
+The project uses [Midje](https://github.com/marick/Midje/).
 
 `lein midje` will run all tests.
 
