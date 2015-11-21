@@ -1,8 +1,11 @@
 (ns poker-hands.result-messages
+  (:require [poker-hands.ranking :as ranking])
   (:require [poker-hands.hand-types :as hand-types])
   (:import (poker_hands.hand_types StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
 
 (def ^:private faces hand-types/faces)
+(def ^:private tie? ranking/tie?)
+(def ^:private winning ranking/winning)
 
 (defprotocol VictoryMessager
   (victory-message [this]))
@@ -45,8 +48,6 @@
   (victory-message [this]
     (str "with a High Card: " (clojure.string/join " " (faces this)))))
 
-(def ^:private winning :winning)
-
 (defn- black? [player]
   (= :black player))
 
@@ -64,8 +65,6 @@
          (victory-message winning-hand))))
 
 (defn- compose-tie-message [] "Tie.")
-
-(def ^:private tie? (partial = :tie))
 
 (defn message [result]
   (if (tie? result)

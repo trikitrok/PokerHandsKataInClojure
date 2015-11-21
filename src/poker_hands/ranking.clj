@@ -31,6 +31,10 @@
      (untie hands)
      (apply max-key ranking hands))))
 
+(def tie? (partial = :tie))
+
+(def winning :winning)
+
 (defn result [hands]
   (if-let [winning-hand (compute-winning-hand hands)]
     {:winning winning-hand}
