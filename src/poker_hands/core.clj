@@ -1,5 +1,5 @@
 (ns poker-hands.core
-  (:require [poker-hands.hands :as hands])
+  (:require [poker-hands.creation :as hands])
   (:require [poker-hands.ranking :as ranking])
   (:require [poker-hands.result-messages :as results]))
 
