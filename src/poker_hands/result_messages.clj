@@ -1,4 +1,4 @@
-(ns poker-hands.results
+(ns poker-hands.result-messages
   (:require [poker-hands.hand-types :as hand-types])
   (:import (poker_hands.hand_types StraightFlush FourKind FullHouse Flush Straight Triplet TwoPairs Pair HighCard)))
 

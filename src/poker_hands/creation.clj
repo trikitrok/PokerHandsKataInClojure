@@ -49,6 +49,6 @@
    :full-house     a-full-house-hand
    :four-kind      a-four-kind-hand})
 
-(defn create-hand [{hand-type :type cards :cards}]
+(defn create [{hand-type :type cards :cards}]
   (let [factory (get factories-by-type hand-type)]
     (factory cards)))

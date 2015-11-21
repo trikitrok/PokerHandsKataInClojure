@@ -30,7 +30,7 @@
       (< ranking1 ranking2) hand2
       :else (untie hand1 hand2))))
 
-(defn compare-hands [hand1 hand2]
-  (-> [hand1 hand2]
+(defn result [hands]
+  (-> hands
       compute-winner-hand
       wrap-in-result))

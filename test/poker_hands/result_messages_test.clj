@@ -1,6 +1,6 @@
-(ns poker-hands.results-test
+(ns poker-hands.result-messages-test
   (:use midje.sweet)
-  (:use [poker-hands.results])
+  (:use [poker-hands.result-messages])
   (:require [poker-hands.examples.results :as results-examples]))
 
 (facts

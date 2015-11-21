@@ -6,8 +6,8 @@
 (defn create-hand [hand-description]
   (-> hand-description
       cards/create-cards
-      identification/identify-hand-type
-      creation/create-hand))
+      identification/identify
+      creation/create))
 
 (defn- extract-player [player-hand]
   (let [player (first (clojure.string/split player-hand #":"))]
