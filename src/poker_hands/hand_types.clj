@@ -10,8 +10,4 @@
 (defrecord Straight [faces])
 (defrecord StraightFlush [faces])
 
-(defn ranking [hand]
-  (let [hands-ranking [HighCard Pair TwoPairs Triplet Straight Flush FullHouse FourKind StraightFlush]]
-    (.indexOf hands-ranking (class hand))))
-
 (def faces :faces)
