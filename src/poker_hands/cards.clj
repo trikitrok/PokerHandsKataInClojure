@@ -24,14 +24,14 @@
 (def ^:private suit :suit)
 
 (def suits (partial map suit))
+(def ^:private faces (partial map face))
+(def ^:private ranks (partial map rank))
 
 (defn- split-in-card-descriptions [hand-description]
   (clojure.string/split hand-description #" "))
 
 (def ^:private sort-by-highest-rank
   (partial sort-by face-rank >))
-
-(def ^:private faces (partial map face))
 
 (defn- faces-frecuencies-subset [selection-pred cards]
   (->> cards
@@ -45,10 +45,9 @@
 
 (def ^:private highest-cards (partial sort-by rank >))
 
-(defn- sorted-ranks [cards]
-  (->> cards
-       (map rank)
-       sort))
+(def ^:private sorted-ranks (comp sort ranks))
+
+(def sorted-faces (comp sort-by-highest-rank faces))
 
 (defn wheel? [hand]
   (= (sorted-ranks hand) [0 1 2 3 12]))
@@ -65,8 +64,6 @@
 
 (defn groups-of? [number size cards]
   (= number (count (faces-frecuencies-subset (comp (partial = size) second) cards))))
-
-(def sorted-faces (comp sort-by-highest-rank faces))
 
 (defn concat-cards-of-groups-with-and-without [size cards]
   (concat
