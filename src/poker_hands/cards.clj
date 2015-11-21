@@ -70,7 +70,7 @@
     (subset (comp (partial = size) second) cards)
     (subset (comp (partial not= size) second) cards)))
 
-(defn create-cards [hand-description]
+(defn create [hand-description]
   (->> hand-description
        split-in-card-descriptions
        (map card)))

@@ -16,7 +16,7 @@
   (or (cards/wheel? hand)
       (cards/consecutive? hand)))
 
-(defn identify [cards]
+(defn identify-hand [cards]
   (cond
     (and (flush? cards)
          (not (straight? cards))) {:type :flush :cards cards}

@@ -1,4 +1,4 @@
-(ns poker-hands.factories
+(ns poker-hands.factory
   (:require [poker-hands.cards :as cards])
   (:require [poker-hands.hand-types :as hand-types]))
 
@@ -49,6 +49,6 @@
    :full-house     a-full-house-hand
    :four-kind      a-four-kind-hand})
 
-(defn create [{hand-type :type cards :cards}]
+(defn create-hand [{hand-type :type cards :cards}]
   (let [factory (get factories-by-type hand-type)]
     (factory cards)))
