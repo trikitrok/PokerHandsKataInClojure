@@ -17,36 +17,31 @@
 (defn- card [card-description]
   (let [face (card-face card-description)]
     {:face face
-     :rank (face-rank face)
      :suit (card-suit card-description)}))
 
-(def face :face)
-(def rank :rank)
-(def suit :suit)
+(def ^:private face :face)
+(def ^:private rank (comp face-rank face))
+(def ^:private suit :suit)
 
 (def suits (partial map suit))
 
 (defn- split-in-card-descriptions [hand-description]
   (clojure.string/split hand-description #" "))
 
-(defn- by-greater-face-rank [face-description1 face-description2]
-  (> (face-rank face-description1)
-     (face-rank face-description2)))
-
-(def ^:private sort-by-greater-face-rank
-  (partial sort by-greater-face-rank))
+(def ^:private sort-by-highest-rank
+  (partial sort-by face-rank >))
 
 (def ^:private faces (partial map face))
 
-(defn- faces-subset [group-selection-pred hand]
-  (->> hand
+(defn- faces-frecuencies-subset [selection-pred cards]
+  (->> cards
        faces
        frequencies
-       (filter group-selection-pred)))
+       (filter selection-pred)))
 
-(defn- subset [group-selection-pred cards]
-  (sort-by-greater-face-rank
-    (map first (faces-subset group-selection-pred cards))))
+(defn- subset [selection-pred cards]
+  (sort-by-highest-rank
+    (map first (faces-frecuencies-subset selection-pred cards))))
 
 (def ^:private highest-cards (partial sort-by rank >))
 
@@ -69,9 +64,9 @@
           (first (highest-cards cards)))))
 
 (defn groups-of? [number size cards]
-  (= number (count (faces-subset (comp (partial = size) second) cards))))
+  (= number (count (faces-frecuencies-subset (comp (partial = size) second) cards))))
 
-(def sorted-faces (comp sort-by-greater-face-rank faces))
+(def sorted-faces (comp sort-by-highest-rank faces))
 
 (defn concat-cards-of-groups-with-and-without [size cards]
   (concat
