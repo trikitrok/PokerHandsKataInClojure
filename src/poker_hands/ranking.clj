@@ -25,18 +25,13 @@
         hand1
         hand2))))
 
-(defn- wrap-in-result [winning-hand]
-  (if (nil? winning-hand)
-    :tie
-    {:winning winning-hand}))
-
-(defn- compute-winner-hand [hands]
+(defn- compute-winning-hand [hands]
  (let [rankings (map ranking hands)]
    (if (apply = rankings)
      (untie hands)
      (apply max-key ranking hands))))
 
 (defn result [hands]
-  (-> hands
-      compute-winner-hand
-      wrap-in-result))
+  (if-let [winning-hand (compute-winning-hand hands)]
+    {:winning winning-hand}
+    :tie))
