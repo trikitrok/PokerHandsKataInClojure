@@ -1,6 +1,5 @@
 (ns poker-hands.creation
   (:require [poker-hands.cards :as cards])
-  (:require [poker-hands.identification :as identification])
   (:require [poker-hands.hand-types :as hand-types]))
 
 (defn- a-high-card [cards]
@@ -23,18 +22,13 @@
   (hand-types/->TwoPairs
     (cards/concat-cards-of-groups-with-and-without 2 cards)))
 
-(defn- straight-highest-card-face [cards]
-  (cards/face (if (identification/wheel? cards)
-                (second (cards/highest-cards cards))
-                (first (cards/highest-cards cards)))))
-
 (defn- a-straight [cards]
   (hand-types/->Straight
-    [(straight-highest-card-face cards)]))
+    [(cards/straight-highest-card-face cards)]))
 
 (defn- a-straight-flush [cards]
   (hand-types/->StraightFlush
-    [(straight-highest-card-face cards)]))
+    [(cards/straight-highest-card-face cards)]))
 
 (defn- a-full-house [cards]
   (hand-types/->FullHouse

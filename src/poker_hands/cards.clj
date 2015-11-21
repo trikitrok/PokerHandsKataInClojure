@@ -24,6 +24,8 @@
 (def rank :rank)
 (def suit :suit)
 
+(def suits (partial map suit))
+
 (defn- split-in-card-descriptions [hand-description]
   (clojure.string/split hand-description #" "))
 
@@ -34,11 +36,11 @@
 (def ^:private sort-by-greater-face-rank
   (partial sort by-greater-face-rank))
 
-(def ^:private pluck-faces (partial map face))
+(def ^:private faces (partial map face))
 
 (defn- faces-subset [group-selection-pred hand]
   (->> hand
-       pluck-faces
+       faces
        frequencies
        (filter group-selection-pred)))
 
@@ -46,17 +48,30 @@
   (sort-by-greater-face-rank
     (map first (faces-subset group-selection-pred cards))))
 
-(defn sorted-ranks [cards]
-  (->> cards
-       (map rank)
-       sort))
+(def ^:private highest-cards (partial sort-by rank >))
 
-(def highest-cards (partial sort-by rank >))
+(defn- sorted-ranks [cards]
+  (->> cards
+       (sort-by rank)
+       (map rank)))
+
+(defn wheel? [hand]
+  (= (sorted-ranks hand) [0 1 2 3 12]))
+
+(defn consecutive? [cards]
+  (every? #(= 1 %)
+          (map #(- (second %) (first %))
+               (partition 2 1 (sorted-ranks cards)))))
+
+(defn straight-highest-card-face [cards]
+  (face (if (wheel? cards)
+          (second (highest-cards cards))
+          (first (highest-cards cards)))))
 
 (defn groups-of? [number size cards]
   (= number (count (faces-subset (comp (partial = size) second) cards))))
 
-(def sorted-faces (comp sort-by-greater-face-rank pluck-faces))
+(def sorted-faces (comp sort-by-greater-face-rank faces))
 
 (defn concat-cards-of-groups-with-and-without [size cards]
   (concat

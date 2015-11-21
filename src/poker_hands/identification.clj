@@ -10,19 +10,11 @@
 (def ^:private two-pairs? (partial cards/groups-of? 2 2))
 
 (defn- flush? [hand]
-  (apply = (map cards/suit hand)))
-
-(defn wheel? [hand]
-  (= (cards/sorted-ranks hand) [0 1 2 3 12]))
-
-(defn- consecutives? [sorted-ranks]
-  (every? #(= 1 %)
-          (map #(- (second %) (first %))
-               (partition 2 1 sorted-ranks))))
+  (apply = (cards/suits hand)))
 
 (defn- straight? [hand]
-  (or (wheel? hand)
-      (consecutives? (cards/sorted-ranks hand))))
+  (or (cards/wheel? hand)
+      (cards/consecutive? hand)))
 
 (defn identify-hand-type [cards]
   (cond
