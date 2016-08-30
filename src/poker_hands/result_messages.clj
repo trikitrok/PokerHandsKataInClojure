@@ -10,10 +10,10 @@
 (def ^:private player players/player)
 (def ^:private black? players/black?)
 
-(defprotocol VictoryMessager
+(defprotocol VictoryMessage
   (victory-message [this]))
 
-(extend-protocol VictoryMessager
+(extend-protocol VictoryMessage
   StraightFlush
   (victory-message [this]
     (str "with a Straight Flush: " (first (faces this))))
